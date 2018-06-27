@@ -17,8 +17,7 @@
   },
   "dependencies": {
     "hyperhtml": "^2.10.1",
-    "hyperhtml-app": "^0.2.1",
-    "reflect-metadata": "^0.1.12"
+    "hyperhtml-app": "^0.2.1"
   },
   "repository": {
     "type": "git",
