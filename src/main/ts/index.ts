@@ -111,10 +111,21 @@ export class Hyperbole {
 		const dependencies = this.dependencies(route.$inject);
 		const _route = new route(...dependencies);
 		this.router.get(route.$route, async (ctx: any) => {
+
+			/** run route before logic */
 			if(_route.before) {
 				await _route.before(ctx);
 			}
+
+			/** set any rotue templates */
+			if(route.$templates) {
+				this.templates(route.$templates);
+			}
+
+			/** update / render templates */
 			this.update();
+
+			/** run route after logic */
 			if(_route.after) {
 				await _route.after(ctx);
 			}
