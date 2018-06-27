@@ -1,0 +1,23 @@
+{
+  "name": "hyperbole",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.js",
+  "scripts": {
+    "watch": "NODE_ENV=development tsc --project tsconfig.json --watch",
+    "build:dev": "NODE_ENV=development tsc --project tsconfig.json",
+    "build": "NODE_ENV=production tsc --project tsconfig.json"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-loader": "^4.3.0",
+    "typescript": "^2.9.0-rc"
+  },
+  "dependencies": {
+    "hyperhtml": "^2.10.1",
+    "hyperhtml-app": "^0.2.1",
+    "reflect-metadata": "^0.1.12"
+  }
+}
