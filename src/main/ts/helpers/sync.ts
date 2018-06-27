@@ -7,4 +7,3 @@ export function sync(obj: any, prop: string) {
 		obj[prop] = el.target.value;
 	}
 }
-
