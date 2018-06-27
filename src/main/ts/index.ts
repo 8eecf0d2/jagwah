@@ -23,9 +23,9 @@ export class Hyperbole {
 	 * Preferably get rid of this method but for now it's
 	 * required to kickstart hyperApp routing on page-load
 	 */
-	public async start(options?: Hyperbole.options) {
+	public async start(options: Hyperbole.options = {}) {
 
-		/** initiallize $hyperbole as a provider */
+		/** initiallize "this" as provider $provider */
 		this._providersCache['$hyperbole'] = this;
 
 		if(options.providers) { this.providers(options.providers) }
@@ -38,11 +38,19 @@ export class Hyperbole {
 				return new fn(...dependencies).task();
 			}))
 		}
+
 		// hack to kickstart hyperApp.
 		this.router.navigate(window.location.pathname);
-		if(!options.noUpdate) {
+
+		/**
+		 * if there are routes, an update() will be called
+		 * when that routes is handled, otherwise we need to
+		 * call it here.
+		 */
+		if(!options.routes) {
 			this.update();
 		}
+
 		if(options.after) {
 			await Promise.all(options.after.map(fn => {
 				const dependencies = this.dependencies(fn.$inject);
@@ -197,8 +205,6 @@ export module Hyperbole {
 		providers?: any;
 		routes?: any;
 		templates?: any;
-
-		noUpdate?: boolean;
 	}
 
 	export module route {
