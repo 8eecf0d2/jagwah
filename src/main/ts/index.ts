@@ -24,14 +24,18 @@ export class Hyperbole {
 	 * required to kickstart hyperApp routing on page-load
 	 */
 	public async start(options?: Hyperbole.options) {
+
+		/** initiallize $hyperbole as a provider */
+		this._providersCache['$hyperbole'] = this;
+
 		if(options.providers) { this.providers(options.providers) }
 		if(options.routes) { this.routes(options.routes) }
 		if(options.templates) { this.templates(options.templates) }
 
 		if(options.before) {
 			await Promise.all(options.before.map(fn => {
-				const dependencies = this.getDependecies(fn.$inject);
-				return new fn(this, ...dependencies).task();
+				const dependencies = this.dependencies(fn.$inject);
+				return new fn(...dependencies).task();
 			}))
 		}
 		// hack to kickstart hyperApp.
@@ -41,8 +45,8 @@ export class Hyperbole {
 		}
 		if(options.after) {
 			await Promise.all(options.after.map(fn => {
-				const dependencies = this.getDependecies(fn.$inject);
-				return new fn(this, ...dependencies).task();
+				const dependencies = this.dependencies(fn.$inject);
+				return new fn(...dependencies).task();
 			}))
 		}
 	}
@@ -87,8 +91,8 @@ export class Hyperbole {
 	 * Set a Provider for state management.
 	 */
 	public provider(provider: any) {
-		const dependencies = this.getDependecies(provider.$inject);
-		this._providersCache[provider.$provider] = new provider(this, ...dependencies);
+		const dependencies = this.dependencies(provider.$inject);
+		this._providersCache[provider.$provider] = new provider(...dependencies);
 	}
 
 	/**
@@ -104,8 +108,8 @@ export class Hyperbole {
 	 * Add a route with templates / callbacks
 	 */
 	public route(route: any) {
-		const dependencies = this.getDependecies(route.$inject);
-		const _route = new route(this, ...dependencies)
+		const dependencies = this.dependencies(route.$inject);
+		const _route = new route(...dependencies);
 		this.router.get(route.$route, async (ctx: any) => {
 			if(_route.before) {
 				await _route.before(ctx);
@@ -129,7 +133,7 @@ export class Hyperbole {
 	/**
 	 * Get dependencies from array of dependency names.
 	 */
-	private getDependecies(names: string[] = []): any[] {
+	private dependencies(names: string[] = []): any[] {
 		const dependencies = [];
 		for(const injectName of names) {
 			if(this._providersCache[injectName]) {
@@ -154,8 +158,8 @@ export class Hyperbole {
 
 	private render(templates: Hyperbole.template[]) {
 		for(const template of templates) {
-			const dependencies = this.getDependecies(template.fn.$inject);
-			const templateInstance = new template.fn(this, ...dependencies);
+			const dependencies = this.dependencies(template.fn.$inject);
+			const templateInstance = new template.fn(...dependencies);
 			templateInstance.render(template.$element);
 		}
 	}
@@ -163,12 +167,13 @@ export class Hyperbole {
 
 export module Hyperbole {
 
-	// hyperHtml stuff
+	/** hyperHtml stuff */
 	export const html = hyperHTML.hyper;
 	export const wire = hyperHTML.wire;
 	export const bind = hyperHTML.bind;
+	export const Component = hyperHTML.Component;
 
-	// hyperHtml-app stuff
+	/** hyperHtml-app stuff */
 	export interface router {
 		navigate: (path: string) => void;
 		get: (path: string, callback: (ctx: any) => void) => void;
@@ -199,18 +204,16 @@ export module Hyperbole {
 	export interface template {
 		$selector: string;
 		$template: string;
-		$element: TemplateFunction<any>;
+		$element: Hyperbole.template.fn<any>;
 		fn: any;
 	}
+
 	export module template {
 		export type render = hyperHTML.WiredTemplateFunction;
+		export type fn<T> = (template: TemplateStringsArray, ...values: any[]) => T;
 	}
 
 	export interface providers {
 		[ProviderName: string]: any;
 	}
 }
-
-export type IHyperboleTemplateRender = (render: hyperHTML.WiredTemplateFunction, ...providers: any[]) => TemplateFunction<any>;
-
-export type TemplateFunction<T> = (template: TemplateStringsArray, ...values: any[]) => T;
