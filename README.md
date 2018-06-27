@@ -29,7 +29,7 @@ hyperbolé is a small wrapper for hyperHTML and a couple other tools, it feels a
 
 ### Example
 
-Below is the a really simple example of hyperbolé, it uses a single Template without Providers or Routes.
+Below is a really simple example of hyperbolé, it uses a single Template without Providers or Routes.
 
 `main.ts`
 ```ts
