@@ -2,8 +2,8 @@
  * hyperbole by 8eecf0d2
  */
 
-import * as _http from './http';
-import * as _sync from './sync';
+import { http as _http } from './http';
+import { sync as _sync } from './sync';
 
 export module Helpers {
 	/** external */
