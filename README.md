@@ -61,6 +61,9 @@ hyperbole.start();
 </body>
 ```
 
+`result.png`
+![hello world with hyperbole](https://i.imgur.com/Yu7GYaK.png)
+
 ### Credits
 
 All of the really hard work was done by [WebReflection](https://github.com/WebReflection) and the contributors of [hyperHtml](https://github.com/WebReflection/hyperHtml/graphs/contributors).
