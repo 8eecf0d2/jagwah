@@ -2,39 +2,48 @@
  * hyperbole by 8eecf0d2
  */
 
-/**
- * TODO: currently only intended for json requests,
- * probably best to refactor into a more capable
- * http helper class with different methods and
- * whatnot..
- */
-export async function http(method: string, url: string, body?: any): Promise<IHTTPData> {
-	let result: IHTTPData;
-	await fetch(url,
-		{
-			method: method.toUpperCase(),
-			body: JSON.stringify(body),
-			credentials: 'include',
-			headers: method.toUpperCase() === 'POST' ? {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			} : {}
-		})
-	.then(response => {
-		result = response;
-		return response.json()
-	})
-	.then(response => {
-		result.data = response;
-	});
+export class http {
+	static options: http.options = {
+		credentials: 'include',
+	}
 
-	if(result.status >= 200 && result.status <= 299) {
-		return result;
-	} else {
-		throw result;
+	static async fetch<T>(url: string, options: http.options) {
+		const _options = Object.assign({}, options, http.options);
+		const response = await fetch(url, _options);
+
+		if(response.status >= 200 && response.status <= 299) {
+			return <Promise<T>>response.json();
+		} else {
+			throw response.json();
+		}
+	}
+
+	static async get<T>(url: string, options: http.options = http.options) {
+		const _options = Object.assign({
+			method: 'GET',
+		}, options, http.options);
+		return http.fetch<T>(url, _options)
+	}
+
+	static async post<T>(url: string, body: http.fetch.body = {}, options: http.options = http.options) {
+		const _options = Object.assign({
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			}
+		}, options, http.options);
+		return http.fetch<T>(url, _options)
 	}
 }
 
-export interface IHTTPData extends Response {
-	data?: any;
+export module http {
+	export module fetch {
+		/** todo: add buffer support */
+		export type body = any;
+	}
+	export interface options extends RequestInit {
+		method?: 'POST' | 'GET';
+	}
 }
