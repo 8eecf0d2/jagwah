@@ -120,12 +120,15 @@ export class Hyperbole {
 		const _route = new route(...dependencies);
 		this.router.get(route.$route, async (ctx: any) => {
 
-			/** run route before logic */
-			if(_route.before) {
-				await _route.before(ctx);
+			/** run route $before middleware */
+			if(route.$before) {
+				for(const middleware of route.$before) {
+					const middlewareDependencies = this.dependencies(middleware.$inject);
+					const _middleware = await new middleware(...middlewareDependencies).middleware();
+				}
 			}
 
-			/** set any rotue templates */
+			/** set any route templates */
 			if(route.$templates) {
 				this.templates(route.$templates);
 			}
@@ -133,9 +136,12 @@ export class Hyperbole {
 			/** update / render templates */
 			this.update();
 
-			/** run route after logic */
-			if(_route.after) {
-				await _route.after(ctx);
+			/** run route $after middleware */
+			if(route.$after) {
+				for(const middleware of route.$after) {
+					const middlewareDependencies = this.dependencies(middleware.$inject);
+					const _middleware = await new middleware(...middlewareDependencies).middleware();
+				}
 			}
 		});
 	}
