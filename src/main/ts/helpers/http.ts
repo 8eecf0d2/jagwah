@@ -12,9 +12,13 @@ export class http {
 		const response = await fetch(url, _options);
 
 		if(response.status >= 200 && response.status <= 299) {
-			return <Promise<T>>response.json();
+			const data = <T>await response.json();
+			return {
+				...response,
+				data: data
+			};
 		} else {
-			throw response.json();
+			throw response;
 		}
 	}
 
