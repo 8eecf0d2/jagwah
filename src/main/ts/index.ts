@@ -131,7 +131,7 @@ export class Hyperbole {
 				}
 			}
 
-			/** run route before method */
+			/** run route before() method */
 			if(_route.before) {
 				await _route.before(ctx)
 			}
@@ -144,7 +144,7 @@ export class Hyperbole {
 			/** update / render templates */
 			this.update();
 
-			/** run route after method */
+			/** run route after() method */
 			if(_route.after) {
 				await _route.after(ctx)
 			}
@@ -220,7 +220,6 @@ export module Hyperbole {
 	export interface options {
 		before?: any[];
 		after?: any[];
-
 		constants?: { [key: string]: any };
 		providers?: any;
 		routes?: any;
