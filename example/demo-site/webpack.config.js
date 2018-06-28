@@ -59,7 +59,7 @@ module.exports = {
 
 if(process.env.WEBPACK_SERVE) {
 	module.exports.serve = {
-		port: 3080,
+		port: 2080,
 		content: ['./src/html', './src'],
 		add: (app, middleware, options) => {
 			app.use(convert(history({})));
