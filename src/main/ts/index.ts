@@ -13,6 +13,8 @@ export * from './decorators';
 export class Hyperbole {
 	public router: Hyperbole.router = hyperApp();
 
+	public constants: { [key: string]: any };
+
 	private _providersCache: Hyperbole.providers = {};
 	private _templatesCache: Hyperbole.template[] = [];
 	private _templatesActive: Hyperbole.template[] = [];
@@ -27,6 +29,8 @@ export class Hyperbole {
 
 		/** initiallize "this" as provider $provider */
 		this._providersCache['$hyperbole'] = this;
+
+		this.constants = options.constants;
 
 		if(options.providers) { this.providers(options.providers) }
 		if(options.routes) { this.routes(options.routes) }
@@ -119,7 +123,6 @@ export class Hyperbole {
 		const dependencies = this.dependencies(route.$inject);
 		const _route = new route(...dependencies);
 		this.router.get(route.$route, async (ctx: any) => {
-
 			/** run route $before middleware */
 			if(route.$before) {
 				for(const middleware of route.$before) {
@@ -208,6 +211,7 @@ export module Hyperbole {
 		before?: any[];
 		after?: any[];
 
+		constants?: { [key: string]: any };
 		providers?: any;
 		routes?: any;
 		templates?: any;
