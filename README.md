@@ -23,9 +23,13 @@ hyperbole.start();
 ```
 
 
+### [Documentation](https://github.com/8eecf0d2/hyperbole/wiki)
+
+All of the documentation can be found in [this repo's github wiki](https://github.com/8eecf0d2/hyperbole/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation will be the focus of release `0.0.2`, for now the focus is features and stability in [`0.0.1`](https://github.com/8eecf0d2/hyperbole/projects/1).
+
 ### Overview
 
-hyperbolé is a small wrapper for hyperHTML and a couple other tools, it feels a bit like "native" AngularJs and for the most part get's out of the way and lets you write web applications however you want.
+hyperbolé is a small wrapper for hyperHTML and a couple other tools, it feels a bit like AngularJs mixed with React, for the most part it get's out of the way and lets you write web applications however you want.
 
 ### Example
 
