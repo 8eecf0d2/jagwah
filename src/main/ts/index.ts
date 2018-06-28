@@ -126,8 +126,7 @@ export class Hyperbole {
 			/** run route $before middleware */
 			if(route.$before) {
 				for(const middleware of route.$before) {
-					const middlewareDependencies = this.dependencies(middleware.$inject);
-					const _middleware = await new middleware(...middlewareDependencies).middleware();
+					await this.middleware(middleware);
 				}
 			}
 
@@ -152,11 +151,18 @@ export class Hyperbole {
 			/** run route $after middleware */
 			if(route.$after) {
 				for(const middleware of route.$after) {
-					const middlewareDependencies = this.dependencies(middleware.$inject);
-					const _middleware = await new middleware(...middlewareDependencies).middleware();
+					await this.middleware(middleware);
 				}
 			}
 		});
+	}
+
+	/**
+	 * Handle middleware for route
+	 */
+	public async middleware(middleware: any) {
+		const middlewareDependencies = this.dependencies(middleware.$inject);
+		return middleware.middleware(...middlewareDependencies);
 	}
 
 	/**
