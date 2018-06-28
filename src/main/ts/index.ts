@@ -131,6 +131,11 @@ export class Hyperbole {
 				}
 			}
 
+			/** run route before method */
+			if(_route.before) {
+				await _route.before(ctx)
+			}
+
 			/** set any route templates */
 			if(route.$templates) {
 				this.templates(route.$templates);
@@ -138,6 +143,11 @@ export class Hyperbole {
 
 			/** update / render templates */
 			this.update();
+
+			/** run route after method */
+			if(_route.after) {
+				await _route.after(ctx)
+			}
 
 			/** run route $after middleware */
 			if(route.$after) {
