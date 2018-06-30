@@ -195,7 +195,7 @@ export class Hyperbole {
 		if(options && options.include) {
 			templates = templates.filter(template => {
 				return options.include.includes(template.$selector);
-			})
+			});
 		}
 		this.render(templates);
 	}
