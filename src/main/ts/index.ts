@@ -7,6 +7,7 @@ import * as hyperApp from 'hyperhtml-app';
 import * as hyperhtml from 'hyperhtml/cjs';
 
 import { Radio } from './radio';
+import { Providers } from './providers';
 
 export * from './filters';
 export * from './helpers';
@@ -34,6 +35,12 @@ export class Hyperbole {
 		/** initialize "this" as provider $hyperbole */
 		this.providers['$hyperbole'] = this;
 
+		/** initialize providers */
+		if(options.providers) {
+			for(const provider in [ ...options.providers, Providers.SyncProvider ]) {
+				this.Provider([ ...options.providers, Providers.SyncProvider ][provider]);
+			}
+		}
 
 		/** initialize routes */
 		if(options.routes) {
