@@ -160,9 +160,9 @@ export class Hyperbole {
 	/**
 	 * Handle middleware for route
 	 */
-	public async Middleware(middleware: Hyperbole.Middleware) {
+	public async Middleware(middleware: Hyperbole.Middleware.instance) {
 		const middlewareDependencies = this.Dependencies(middleware.$inject);
-		return middleware.middleware(...middlewareDependencies);
+		return middleware.task(...middlewareDependencies);
 	}
 
 	/**
@@ -217,8 +217,8 @@ export module Hyperbole {
 
 	export module start {
 		export interface options {
-			before?: Function[];
-			after?: Function[];
+			before?: any[];
+			after?: any[];
 		}
 	}
 
@@ -286,20 +286,23 @@ export module Hyperbole {
 	export interface Route {
 		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Route.instance;
 		$route?: Hyperbole.Route.path;
-		$templates?: Hyperbole.Template.name[];
+		$templates?: Hyperbole.Template[];
 		$inject?: Hyperbole.Provider.name[];
-		$before?: Hyperbole.Middleware[];
-		$after?: Hyperbole.Middleware[];
+		$before?: Hyperbole.Middleware.instance[];
+		$after?: Hyperbole.Middleware.instance[];
 	}
 
 	/** Middleware */
 	export module Middleware {
 		export interface instance {
-			middleware: (...dependencies: Hyperbole.Provider.instance[]) => void;
+			task: (...dependencies: Hyperbole.Provider.instance[]) => void;
+			/** todo: not sure how this is supposed to work lol */
+			$inject?: Hyperbole.Provider.name[];
 		}
 	}
 	export interface Middleware {
 		new(...params: any[]): Hyperbole.Route.instance;
+		/** todo: not sure how this is supposed to work lol */
 		$inject?: Hyperbole.Provider.name[];
 	}
 
