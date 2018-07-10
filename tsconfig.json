@@ -13,12 +13,7 @@
 			"es6",
 			"es7",
 			"dom"
-		],
-    "plugins": [
-      {
-        "name": "typescript-lit-html-plugin"
-      }
-    ]
+		]
 	},
 	"include": [
 			"src/main/**/*.ts"
