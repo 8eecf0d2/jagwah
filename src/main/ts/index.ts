@@ -6,6 +6,7 @@
 import * as hyperApp from 'hyperhtml-app';
 import * as hyperhtml from 'hyperhtml/cjs';
 
+import { Radio } from './radio';
 
 export * from './filters';
 export * from './helpers';
@@ -14,6 +15,7 @@ export * from './decorators';
 export class Hyperbole {
 	public initialized: boolean = false;
 	public router: Hyperbole.router = hyperApp();
+	public radio: Radio = new Radio();
 
 	public constants: { [key: string]: any };
 
