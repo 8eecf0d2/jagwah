@@ -1,5 +1,5 @@
 /*
- * hyperbole by 8eecf0d2
+ * Hyperbolé - https://github.com/8eecf0d2/hyperbole
  */
 
 export function Template(template: string, selector?: string) {
