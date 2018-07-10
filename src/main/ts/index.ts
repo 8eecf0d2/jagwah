@@ -23,9 +23,7 @@ export class Hyperbole {
 	/** all providers */
 	private providers: Hyperbole.Provider.set = {};
 	/** all templates */
-	private templates: Hyperbole.template[] = [];
-	/** templates currently in use */
-	private _templates: Hyperbole.template[] = [];
+	private templates: Hyperbole.Template.set = {};
 
 	constructor(
 		options: Hyperbole.options = {},
@@ -80,29 +78,17 @@ export class Hyperbole {
 	/**
 	 * Set a Template for rendering.
 	 */
-	public Template(template: Hyperbole.Template, selector?: string) {
+	public Template(template: Hyperbole.Template) {
 		const dependencies = this.Dependencies(template.$inject);
-		const temp: Hyperbole.template = {
-			$selector: selector || template.$selector,
+		const _template: Hyperbole.Template.copy = {
+			$selector: template.$selector,
 			$template: template.$template,
-			$element: hyperhtml.bind(document.querySelectorAll(selector || template.$selector)[0]),
+			$element: hyperhtml.bind(document.querySelectorAll(template.$selector)[0]),
 			instance: new template(...dependencies),
 		}
 
-		/** add template to cached templates (based on name) */
-		let existingCachedTemplateIndex = this.templates.findIndex(_template => _template.$template === temp.$template);
-		if(existingCachedTemplateIndex === -1) {
-			this.templates.push(temp);
-			existingCachedTemplateIndex = this.templates.length - 1;
-		}
-
 		/** add / replace template in active templates (based on selector) */
-		let existingActiveTemplateIndex = this._templates.findIndex(_template => _template.$selector === this.templates[existingCachedTemplateIndex].$selector);
-		if(existingActiveTemplateIndex === -1) {
-			this._templates.push(this.templates[existingCachedTemplateIndex]);
-		} else {
-			this._templates[existingActiveTemplateIndex] = this.templates[existingCachedTemplateIndex];
-		}
+		this.templates[_template.$selector] = _template;
 	}
 
 	/**
@@ -181,15 +167,9 @@ export class Hyperbole {
 	/**
 	 * Update DOM
 	 */
-	public update(options?: Hyperbole.update.options) {
-		// let templates = this._templates;
-		// if(options && options.include) {
-		// 	templates = templates.filter(template => {
-		// 		return options.include.includes(template.$selector);
-		// 	});
-		// }
-		for(const template of this._templates) {
-			template.instance.render(template.$element);
+	public update() {
+		for(const template in this.templates) {
+			this.templates[template].instance.render(this.templates[template].$element);
 		}
 	}
 }
@@ -222,25 +202,6 @@ export module Hyperbole {
 		}
 	}
 
-	export module update {
-		export interface options {
-			exclude?: string[];
-			include?: string[];
-		}
-	}
-
-	export interface template {
-		$selector: string;
-		$template: string;
-		$element: Hyperbole.template.instance<any>;
-		instance: any;
-	}
-
-	export module template {
-		export type render = hyperhtml.WiredTemplateFunction;
-		export type instance<T> = (template: TemplateStringsArray, ...values: any[]) => T;
-	}
-
 	/** Provider */
 	export module Provider {
 		export type name = string;
@@ -262,7 +223,17 @@ export module Hyperbole {
 	export module Template {
 		export type name = string;
 		export type selector = string;
+		export type element = (template: TemplateStringsArray, ...values: any[]) => any;
 		export type render = hyperhtml.WiredTemplateFunction;
+		export interface set {
+			[TemplateName: string]: Hyperbole.Template.copy;
+		}
+		export interface copy {
+			$selector: string;
+			$template: string;
+			$element: Hyperbole.Template.element;
+			instance: any;
+		}
 		export interface instance {
 			render: (render: Hyperbole.Template.render) => HTMLElement|Promise<HTMLElement>;
 		}
