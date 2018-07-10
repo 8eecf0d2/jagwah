@@ -29,7 +29,7 @@ All of the documentation can be found in [this repo's github wiki](https://githu
 
 ### Overview
 
-hyperbolé is a small wrapper for hyperHTML and a couple other tools, it feels a bit like AngularJs mixed with React, for the most part it get's out of the way and lets you write web applications however you want.
+hyperbolé is a small wrapper for hyperHtml and a couple other tools, it feels a bit like AngularJs mixed with React, ~~for the most part it get's out of the way and lets you write web applications however you want~~ _as of right now it's got some strong opinions about how you should write web applications with it._
 
 ### Example
 
