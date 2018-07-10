@@ -4,61 +4,66 @@
 
 //@ts-ignore
 import * as hyperApp from 'hyperhtml-app';
-import * as hyperHTML from 'hyperhtml/cjs';
+import * as hyperhtml from 'hyperhtml/cjs';
+
 
 export * from './filters';
 export * from './helpers';
 export * from './decorators';
 
 export class Hyperbole {
+	public initialized: boolean = false;
 	public router: Hyperbole.router = hyperApp();
 
 	public constants: { [key: string]: any };
 
-	private _providersCache: Hyperbole.providers = {};
-	private _templatesCache: Hyperbole.template[] = [];
-	private _templatesActive: Hyperbole.template[] = [];
+	/** all providers */
+	private providers: Hyperbole.Provider.set = {};
+	/** all templates */
+	private templates: Hyperbole.template[] = [];
+	/** templates currently in use */
+	private _templates: Hyperbole.template[] = [];
 
-	constructor() {}
-
-	/**
-	 * Preferably get rid of this method but for now it's
-	 * required to kickstart hyperApp routing on page-load
-	 */
-	public async start(options: Hyperbole.options = {}) {
-
-		/** initiallize "this" as provider $provider */
-		this._providersCache['$hyperbole'] = this;
-
+	constructor(
+		options: Hyperbole.options = {},
+	) {
 		this.constants = options.constants;
 
-		if(options.providers) { this.providers(options.providers) }
-		if(options.routes) { this.routes(options.routes) }
-		if(options.templates) { this.templates(options.templates) }
+		/** initialize "this" as provider $hyperbole */
+		this.providers['$hyperbole'] = this;
 
+
+		/** initialize routes */
+		if(options.routes) {
+			for(const route in options.routes) {
+				this.Route(options.routes[route]);
+			}
+		}
+
+		/** initialize templates */
+		if(options.templates) {
+			for(const template in options.templates) {
+				this.Template(options.templates[template]);
+			}
+		}
+	}
+
+	/** start the hyperbole application */
+	public async start(options: Hyperbole.start.options = {}) {
 		if(options.before) {
-			await Promise.all(options.before.map(fn => {
-				const dependencies = this.dependencies(fn.$inject);
-				return new fn(...dependencies).task();
+			await Promise.all(options.before.map(BeforeHandler => {
+				const dependencies = this.Dependencies(BeforeHandler.$inject);
+				return new BeforeHandler(...dependencies).task();
 			}))
 		}
 
-		// hack to kickstart hyperApp.
+		this.initialized = true;
 		this.router.navigate(window.location.pathname);
 
-		/**
-		 * if there are routes, an update() will be called
-		 * when that routes is handled, otherwise we need to
-		 * call it here.
-		 */
-		if(!options.routes) {
-			this.update();
-		}
-
 		if(options.after) {
-			await Promise.all(options.after.map(fn => {
-				const dependencies = this.dependencies(fn.$inject);
-				return new fn(...dependencies).task();
+			await Promise.all(options.after.map(AfterHandler => {
+				const dependencies = this.Dependencies(AfterHandler.$inject);
+				return new AfterHandler(...dependencies).task();
 			}))
 		}
 	}
@@ -66,67 +71,51 @@ export class Hyperbole {
 	/**
 	 * Set a Template for rendering.
 	 */
-	public template(template: any, selector?: string) {
+	public Template(template: Hyperbole.Template, selector?: string) {
+		const dependencies = this.Dependencies(template.$inject);
 		const temp: Hyperbole.template = {
 			$selector: selector || template.$selector,
 			$template: template.$template,
-			$element: hyperHTML.bind(document.querySelectorAll(selector || template.$selector)[0]),
-			fn: template
+			$element: hyperhtml.bind(document.querySelectorAll(selector || template.$selector)[0]),
+			instance: new template(...dependencies),
 		}
 
 		/** add template to cached templates (based on name) */
-		let existingCachedTemplateIndex = this._templatesCache.findIndex(_template => _template.$template === temp.$template);
+		let existingCachedTemplateIndex = this.templates.findIndex(_template => _template.$template === temp.$template);
 		if(existingCachedTemplateIndex === -1) {
-			this._templatesCache.push(temp);
-			existingCachedTemplateIndex = this._templatesCache.length - 1;
+			this.templates.push(temp);
+			existingCachedTemplateIndex = this.templates.length - 1;
 		}
 
 		/** add / replace template in active templates (based on selector) */
-		let existingActiveTemplateIndex = this._templatesActive.findIndex(_template => _template.$selector === this._templatesCache[existingCachedTemplateIndex].$selector);
+		let existingActiveTemplateIndex = this._templates.findIndex(_template => _template.$selector === this.templates[existingCachedTemplateIndex].$selector);
 		if(existingActiveTemplateIndex === -1) {
-			this._templatesActive.push(this._templatesCache[existingCachedTemplateIndex]);
+			this._templates.push(this.templates[existingCachedTemplateIndex]);
 		} else {
-			this._templatesActive[existingActiveTemplateIndex] = this._templatesCache[existingCachedTemplateIndex];
-		}
-	}
-
-	/**
-	 * Set Templates based on an object containing many Templates.
-	 */
-	public templates(templates: { [name: string]: any }) {
-		for(const template in templates) {
-			this.template(templates[template]);
+			this._templates[existingActiveTemplateIndex] = this.templates[existingCachedTemplateIndex];
 		}
 	}
 
 	/**
 	 * Set a Provider for state management.
 	 */
-	public provider(provider: any) {
-		const dependencies = this.dependencies(provider.$inject);
-		this._providersCache[provider.$provider] = new provider(...dependencies);
-	}
-
-	/**
-	 * Set Providers based on an object containing many Providers.
-	 */
-	public providers(providers: { [name: string]: any }) {
-		for(const provider in providers) {
-			this.provider(providers[provider]);
-		}
+	public Provider(provider: Hyperbole.Provider) {
+		const dependencies = this.Dependencies(provider.$inject);
+		this.providers[provider.$provider] = new provider(...dependencies);
 	}
 
 	/**
 	 * Add a route with templates / callbacks
 	 */
-	public route(route: any) {
-		const dependencies = this.dependencies(route.$inject);
+	public Route(route: Hyperbole.Route) {
+		const dependencies = this.Dependencies(route.$inject);
 		const _route = new route(...dependencies);
 		this.router.get(route.$route, async (ctx: any) => {
+			this.router.params = ctx.params;
 			/** run route $before middleware */
 			if(route.$before) {
 				for(const middleware of route.$before) {
-					await this.middleware(middleware);
+					await this.Middleware(middleware);
 				}
 			}
 
@@ -135,12 +124,14 @@ export class Hyperbole {
 				await _route.before(ctx)
 			}
 
-			/** set any route templates */
+			/** set route templates */
 			if(route.$templates) {
-				this.templates(route.$templates);
+				for(const template of route.$templates) {
+					this.Template(template);
+				}
 			}
 
-			/** update / render templates */
+			/** update templates in use */
 			this.update();
 
 			/** run route after() method */
@@ -151,7 +142,7 @@ export class Hyperbole {
 			/** run route $after middleware */
 			if(route.$after) {
 				for(const middleware of route.$after) {
-					await this.middleware(middleware);
+					await this.Middleware(middleware);
 				}
 			}
 		});
@@ -160,80 +151,66 @@ export class Hyperbole {
 	/**
 	 * Handle middleware for route
 	 */
-	public async middleware(middleware: any) {
-		const middlewareDependencies = this.dependencies(middleware.$inject);
+	public async Middleware(middleware: Hyperbole.Middleware) {
+		const middlewareDependencies = this.Dependencies(middleware.$inject);
 		return middleware.middleware(...middlewareDependencies);
-	}
-
-	/**
-	 * Set Routes based on an object containing many Routes.
-	 */
-	public routes(routes: { [name: string]: any }) {
-		for(const route in routes) {
-			this.route(routes[route]);
-		}
 	}
 
 	/**
 	 * Get dependencies from array of dependency names.
 	 */
-	private dependencies(names: string[] = []): any[] {
+	private Dependencies(names: Hyperbole.Provider.name[] = []): Hyperbole.Provider.instance[] {
 		const dependencies = [];
 		for(const injectName of names) {
-			if(this._providersCache[injectName]) {
-				dependencies.push(this._providersCache[injectName]);
+			if(this.providers[injectName]) {
+				dependencies.push(this.providers[injectName]);
 			}
 		}
 		return dependencies;
 	}
 
 	/**
-	 * Update registered templates
+	 * Update DOM
 	 */
 	public update(options?: Hyperbole.update.options) {
-		let templates = this._templatesActive;
-		if(options && options.include) {
-			templates = templates.filter(template => {
-				return options.include.includes(template.$selector);
-			});
-		}
-		this.render(templates);
-	}
-
-	private render(templates: Hyperbole.template[]) {
-		for(const template of templates) {
-			const dependencies = this.dependencies(template.fn.$inject);
-			const templateInstance = new template.fn(...dependencies);
-			templateInstance.render(template.$element);
+		// let templates = this._templates;
+		// if(options && options.include) {
+		// 	templates = templates.filter(template => {
+		// 		return options.include.includes(template.$selector);
+		// 	});
+		// }
+		for(const template of this._templates) {
+			template.instance.render(template.$element);
 		}
 	}
 }
 
 export module Hyperbole {
+	/** hyperHtml */
+	export const wire = hyperhtml.wire;
+	export const bind = hyperhtml.bind;
+	export const define = hyperhtml.define;
 
-	/** hyperHtml stuff */
-	export const html = hyperHTML.hyper;
-	export const wire = hyperHTML.wire;
-	export const bind = hyperHTML.bind;
-	export const Component = hyperHTML.Component;
-
-	/** hyperHtml-app stuff */
+	/** hyperHtml-app */
+	/** todo: rewrite... */
 	export interface router {
-		navigate: (path: string) => void;
+		navigate: (path: string, options?: { replace: boolean }) => void;
 		get: (path: string, callback: (ctx: any) => void) => void;
+		params: { [key: string]: string };
 	}
 
 	export interface options {
-		before?: any[];
-		after?: any[];
 		constants?: { [key: string]: any };
-		providers?: any;
-		routes?: any;
-		templates?: any;
+		providers?: Hyperbole.Provider[];
+		routes?: Hyperbole.Route[];
+		templates?: Hyperbole.Template[];
 	}
 
-	export module route {
-		export type callback = (ctx: any, ...args: any[]) => Promise<void>;
+	export module start {
+		export interface options {
+			before?: Function[];
+			after?: Function[];
+		}
 	}
 
 	export module update {
@@ -246,16 +223,82 @@ export module Hyperbole {
 	export interface template {
 		$selector: string;
 		$template: string;
-		$element: Hyperbole.template.fn<any>;
-		fn: any;
+		$element: Hyperbole.template.instance<any>;
+		instance: any;
 	}
 
 	export module template {
-		export type render = hyperHTML.WiredTemplateFunction;
-		export type fn<T> = (template: TemplateStringsArray, ...values: any[]) => T;
+		export type render = hyperhtml.WiredTemplateFunction;
+		export type instance<T> = (template: TemplateStringsArray, ...values: any[]) => T;
 	}
 
-	export interface providers {
-		[ProviderName: string]: any;
+	/** Provider */
+	export module Provider {
+		export type name = string;
+		export interface set {
+			[ProviderName: string]: Hyperbole.Provider.instance;
+		}
+		export interface instance {}
+
+		/** Built-in Providers*/
+		export type SyncProvider = Providers.SyncProvider;
+	}
+	export interface Provider {
+		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Provider.instance;
+		$provider?: Hyperbole.Provider.name;
+		$inject?: Hyperbole.Provider.name[];
+	}
+
+	/** Template */
+	export module Template {
+		export type name = string;
+		export type selector = string;
+		export type render = hyperhtml.WiredTemplateFunction;
+		export interface instance {
+			render: (render: Hyperbole.Template.render) => HTMLElement|Promise<HTMLElement>;
+		}
+	}
+	export interface Template {
+		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Template.instance;
+		$template?: Hyperbole.Template.name;
+		$selector?: Hyperbole.Template.selector;
+		$inject?: Hyperbole.Provider.name[];
+	}
+
+	/** Route */
+	export module Route {
+		export type path = string;
+		export type middleware = hyperhtml.WiredTemplateFunction;
+		export interface instance {
+			before?: (ctx: any) => void;
+			after?: (ctx: any) => void;
+		}
+	}
+	export interface Route {
+		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Route.instance;
+		$route?: Hyperbole.Route.path;
+		$templates?: Hyperbole.Template.name[];
+		$inject?: Hyperbole.Provider.name[];
+		$before?: Hyperbole.Middleware[];
+		$after?: Hyperbole.Middleware[];
+	}
+
+	/** Middleware */
+	export module Middleware {
+		export interface instance {
+			middleware: (...dependencies: Hyperbole.Provider.instance[]) => void;
+		}
+	}
+	export interface Middleware {
+		new(...params: any[]): Hyperbole.Route.instance;
+		$inject?: Hyperbole.Provider.name[];
+	}
+
+	export const ObjectToArray = <T = any>(obj: {[key: string]: T}): T[] => {
+		const array = [];
+		for(const key in obj) {
+			array.push(obj[key]);
+		}
+		return array;
 	}
 }
