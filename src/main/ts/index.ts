@@ -9,7 +9,6 @@ import * as hyperhtml from 'hyperhtml/cjs';
 import { Radio } from './radio';
 import { Providers } from './providers';
 
-export * from './filters';
 export * from './helpers';
 export * from './decorators';
 
@@ -35,8 +34,9 @@ export class Hyperbole {
 
 		/** initialize providers */
 		if(options.providers) {
-			for(const provider in [ ...options.providers, Providers.SyncProvider ]) {
-				this.Provider([ ...options.providers, Providers.SyncProvider ][provider]);
+			const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...options.providers ]
+			for(const provider in providers) {
+				this.Provider(providers[provider]);
 			}
 		}
 
@@ -76,7 +76,7 @@ export class Hyperbole {
 	}
 
 	/**
-	 * Set a Template for rendering.
+	 * Initialize a Template for rendering.
 	 */
 	public Template(template: Hyperbole.Template) {
 		const dependencies = this.Dependencies(template.$inject);
@@ -92,7 +92,7 @@ export class Hyperbole {
 	}
 
 	/**
-	 * Set a Provider for state management.
+	 * Initialize a Provider for state management.
 	 */
 	public Provider(provider: Hyperbole.Provider) {
 		const dependencies = this.Dependencies(provider.$inject);
@@ -212,6 +212,7 @@ export module Hyperbole {
 
 		/** Built-in Providers*/
 		export type SyncProvider = Providers.SyncProvider;
+		export type HttpProvider = Providers.HttpProvider;
 	}
 	export interface Provider {
 		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Provider.instance;

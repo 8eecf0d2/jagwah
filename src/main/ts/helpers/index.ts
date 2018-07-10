@@ -2,7 +2,6 @@
  * Hyperbolé - https://github.com/8eecf0d2/hyperbole
  */
 
-import { http as _http } from './http';
 import { safeGet as _safeGet } from './safe-get';
 import { safeSet as _safeSet } from './safe-set';
 
@@ -14,7 +13,6 @@ export module Helpers {
 	}
 
 	/** built-in */
-	export const http = _http;
 	export const safeGet = _safeGet;
 	export const safeSet = _safeSet;
 }

@@ -6,7 +6,9 @@ import { Hyperbole, Helpers } from '../';
 
 export class HttpProvider {
 	static $provider = '$http';
-	static $inject = ['$hyperbole'];
+	static $inject: string[] = [];
+
+	constructor() {}
 
 	static options: HttpProvider.options = {
 		credentials: 'include',
