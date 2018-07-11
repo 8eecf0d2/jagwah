@@ -12,6 +12,7 @@
   "author": "8eecf0d2",
   "license": "ISC",
   "devDependencies": {
+    "path-to-regexp": "^2.2.1",
     "ts-loader": "^4.3.0",
     "typescript": "^2.9.0-rc"
   },
