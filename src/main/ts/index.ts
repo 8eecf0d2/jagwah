@@ -2,8 +2,6 @@
  * Hyperbolé - https://github.com/8eecf0d2/hyperbole
  */
 
-//@ts-ignore
-import * as hyperApp from 'hyperhtml-app';
 import * as hyperhtml from 'hyperhtml/cjs';
 
 import { Radio } from './radio';
@@ -15,10 +13,8 @@ export * from './decorators';
 
 export class Hyperbole {
 	public initialized: boolean = false;
-	// public router: Router = new Router();
-	public router: Hyperbole.router = hyperApp();
+	public router: Router = new Router();
 	public radio: Radio = new Radio();
-
 	public constants: { [key: string]: any };
 
 	/** all providers */
@@ -107,8 +103,7 @@ export class Hyperbole {
 	public Route(route: Hyperbole.Route) {
 		const dependencies = this.Dependencies(route.$inject);
 		const _route = new route(...dependencies);
-		this.router.get(route.$route, async (ctx: any) => {
-			this.router.params = ctx.params;
+		this.router.get(route.$route, async (context: Router.Context) => {
 			/** run route $before middleware */
 			if(route.$before) {
 				for(const middleware of route.$before) {
@@ -118,7 +113,7 @@ export class Hyperbole {
 
 			/** run route before() method */
 			if(_route.before) {
-				await _route.before(ctx)
+				await _route.before(context)
 			}
 
 			/** set route templates */
@@ -133,7 +128,7 @@ export class Hyperbole {
 
 			/** run route after() method */
 			if(_route.after) {
-				await _route.after(ctx)
+				await _route.after(context)
 			}
 
 			/** run route $after middleware */
@@ -181,14 +176,6 @@ export module Hyperbole {
 	export const wire = hyperhtml.wire;
 	export const bind = hyperhtml.bind;
 	export const define = hyperhtml.define;
-
-	/** hyperHtml-app */
-	/** todo: rewrite... */
-	export interface router {
-		navigate: (path: string, options?: { replace: boolean }) => void;
-		get: (path: string, callback: (ctx: any) => void) => void;
-		params: { [key: string]: string };
-	}
 
 	export interface options {
 		constants?: { [key: string]: any };
@@ -253,8 +240,8 @@ export module Hyperbole {
 		export type path = string;
 		export type middleware = hyperhtml.WiredTemplateFunction;
 		export interface instance {
-			before?: (ctx: any) => void;
-			after?: (ctx: any) => void;
+			before?: (context: Router.Context) => void;
+			after?: (context: Router.Context) => void;
 		}
 	}
 	export interface Route {

@@ -508,6 +508,10 @@ onpushstate@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/onpushstate/-/onpushstate-0.1.1.tgz#cfc0a121b5c1fe73070fe02ed18544659dc1d3ee"
 
+onpushstate@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.npmjs.org/onpushstate/-/onpushstate-0.3.1.tgz#b6c612beebf4388b9d4cdd1223fd81ef365db877"
+
 pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"

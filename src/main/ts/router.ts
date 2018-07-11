@@ -4,9 +4,10 @@
 
 /** todo: switch to url-pattern package */
 import * as pathToRegex from 'path-to-regexp';
+import 'onpushstate';
 
 export class Router {
-
+	public context: Router.Context;
 	public paths: Router.Path.set = {};
 
 	constructor() {
@@ -26,6 +27,9 @@ export class Router {
 	}
 
 	public navigate(path: string) {
+		if(path === location.pathname) {
+			return this.handleEvent();
+		}
     const html = document.documentElement;
     const anchor = document.createElement('a');
     anchor.href = path;
@@ -45,8 +49,10 @@ export class Router {
 	}
 
 	private handleMatch(path: Router.Path, result: RegExpExecArray) {
-		const params = this.deconstructParams(path.keys, result);
-		path.handler({ params: params })
+		this.context = {
+			params: this.deconstructParams(path.keys, result),
+		};
+		path.handler(this.context);
 	}
 
 	private deconstructParams(keys: pathToRegex.Key[], result: RegExpExecArray) {
@@ -64,10 +70,7 @@ export class Router {
 
 export module Router {
 	export module Path {
-		export type handler = (context: Router.Path.context) => void;
-		export interface context {
-			params: { [name: string]: string }
-		}
+		export type handler = (context: Router.Context) => void;
 		export interface set {
 			[RegExp: string]: Router.Path;
 		}
@@ -76,5 +79,11 @@ export module Router {
 		keys: pathToRegex.Key[];
 		regex: RegExp;
 		handler: Router.Path.handler;
+	}
+
+	export interface Context {
+		params: {
+			[name: string]: string;
+		}
 	}
 }
