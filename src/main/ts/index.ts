@@ -226,7 +226,7 @@ export module Hyperbole {
 	export module Template {
 		export type name = string;
 		export type selector = string;
-		export type element = (template: TemplateStringsArray, ...values: any[]) => any;
+		export type element = hyperhtml.BoundTemplateFunction<Element>;
 		export type render = hyperhtml.WiredTemplateFunction;
 		export interface set {
 			[TemplateName: string]: Hyperbole.Template.copy;
