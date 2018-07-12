@@ -8,11 +8,11 @@
     "./dist/router.js"
   ],
   "scripts": {
-    "watch": "NODE_ENV=development tsc --project tsconfig.json --watch",
-    "build:dev": "NODE_ENV=development tsc --project tsconfig.json",
-    "build": "NODE_ENV=production tsc --project tsconfig.json",
-    "prepublish:build": "yarn build",
-    "publish:build": "npm publish"
+    "watch": "tsc --project tsconfig.json --watch",
+    "build": "tsc --project tsconfig.json",
+    "build:test": "tsc --project tsconfig.test.json",
+    "pretest": "yarn build:test",
+    "test": "node test/index.spec.js"
   },
   "author": "8eecf0d2",
   "license": "ISC",
