@@ -1,6 +1,6 @@
 {
   "name": "jagwah",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Wrapper for the awesome hyperHtml renderer written in Typescript.",
   "main": "dist/index.js",
   "types": "dist/index.js",
@@ -10,7 +10,9 @@
   "scripts": {
     "watch": "NODE_ENV=development tsc --project tsconfig.json --watch",
     "build:dev": "NODE_ENV=development tsc --project tsconfig.json",
-    "build": "NODE_ENV=production tsc --project tsconfig.json"
+    "build": "NODE_ENV=production tsc --project tsconfig.json",
+    "prepublish:build": "yarn build",
+    "publish:build": "npm publish"
   },
   "author": "8eecf0d2",
   "license": "ISC",
@@ -18,8 +20,7 @@
     "typescript": "^2.9.0-rc"
   },
   "dependencies": {
-    "hyperhtml": "^2.10.1",
-    "onpushstate": "^0.3.1",
+    "hyperhtml": "^2.11.2",
     "url-pattern": "^1.0.3"
   },
   "repository": {

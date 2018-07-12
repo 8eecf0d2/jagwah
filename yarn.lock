@@ -2,19 +2,15 @@
 # yarn lockfile v1
 
 
-hyperhtml@^2.10.1:
-  version "2.11.1"
-  resolved "https://registry.npmjs.org/hyperhtml/-/hyperhtml-2.11.1.tgz#787b04ef8e34b32ad2c79acc4c61e58b0ea684a5"
+hyperhtml@^2.11.2:
+  version "2.11.2"
+  resolved "https://registry.npmjs.org/hyperhtml/-/hyperhtml-2.11.2.tgz#03b9183b3ea3d80103252ec0c874577e745815b3"
   dependencies:
-    lightercollective "^0.0.3"
+    lightercollective "^0.1.0"
 
-lightercollective@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/lightercollective/-/lightercollective-0.0.3.tgz#c58f01fde36f4d9432eda354c635a192fc291b2b"
-
-onpushstate@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.npmjs.org/onpushstate/-/onpushstate-0.3.1.tgz#b6c612beebf4388b9d4cdd1223fd81ef365db877"
+lightercollective@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/lightercollective/-/lightercollective-0.1.0.tgz#70df102c530dcb8d0ccabfe6175a8d00d5f61300"
 
 typescript@^2.9.0-rc:
   version "2.9.2"
