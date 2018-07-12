@@ -1,6 +1,6 @@
-# jagwah
+# Jagwah
 
-Wrapper for the awesome hyperHtml renderer written in Typescript.
+Simple web application framework with HyperHTML & Typescript.
 
 ### Getting Started
 
@@ -15,9 +15,10 @@ Import and start using
 ```ts
 import { Jagwah } from 'jagwah';
 ​
-const jagwah = new Jagwah();
-jagwah.provider(...);
-jagwah.template(...);
+const jagwah = new Jagwah({
+  providers: { ... },
+  templates: { ... }
+});
 ...
 jagwah.start();
 ```
@@ -25,7 +26,7 @@ jagwah.start();
 
 ### [Documentation](https://github.com/8eecf0d2/jagwah/wiki)
 
-All of the documentation can be found in [this repo's github wiki](https://github.com/8eecf0d2/jagwah/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation will be the focus of release `0.0.2`, for now the focus is features and stability in [`0.0.1`](https://github.com/8eecf0d2/jagwah/projects/1).
+All of the documentation can be found in [the github wiki](https://github.com/8eecf0d2/jagwah/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation is the focus of minor release [`0.2.0`](https://github.com/8eecf0d2/jagwah/projects/4).
 
 ### Overview
 
@@ -44,24 +45,24 @@ const jagwah = new Jagwah();
 @Template('hello-world')
 @Selector('#hello-world')
 class HelloWorldTemplate {
-  constructor(
-    private render: Jagwah.template.render
-  ) {
+  constructor() {}
+  return render(private render: Jagwah.Template.render) {
     return render`
       <h1>Hello World</h1>
     `;
   }
 }
 ​
-jagwah.template(HelloWorldTemplate);
+jagwah.Template(HelloWorldTemplate);
 ​
 jagwah.start();
+jagwah.update();
 ```
 
 `index.html`
 ```html
 <body>
-	<div id="hello-world"></div>
+  <div id="hello-world"></div>
 </body>
 ```
 
@@ -72,6 +73,6 @@ jagwah.start();
 
 All of the really hard work was done by [WebReflection](https://github.com/WebReflection) and the contributors of [hyperHtml](https://github.com/WebReflection/hyperHtml/graphs/contributors).
 
-[jagwah](https://github.com/8eecf0d2/jagwah) was created by [Contributors](https://github.com/8eecf0d2/jagwah/graphs/contributors)
+[Jagwah](https://github.com/8eecf0d2/jagwah) was created by [Contributors](https://github.com/8eecf0d2/jagwah/graphs/contributors)
 
 [hyperHtml](https://github.com/WebReflection/hyperHtml) was created by [WebReflection](https://github.com/WebReflection)
