@@ -13,8 +13,8 @@ export * from './decorators';
 
 export class Hyperbole {
 	public initialized: boolean = false;
-	public router: Router = new Router();
-	public radio: Radio;
+	public radio: Radio = new Radio();
+	public router: Router = new Router(this.radio);
 
 	public constants: { [key: string]: any };
 
@@ -26,10 +26,6 @@ export class Hyperbole {
 	) {
 		/** initialize constants */
 		this.constants = options.constants;
-
-		if(options.radio === true) {
-			this.radio = new Radio();
-		}
 
 		/** initialize "this" as provider $hyperbole */
 		this.providers['$hyperbole'] = this;
@@ -63,7 +59,7 @@ export class Hyperbole {
 			await Promise.all(options.before.map(BeforeHandler => {
 				const dependencies = this.Dependencies(BeforeHandler.$inject);
 				return new BeforeHandler(...dependencies).task();
-			}))
+			}));
 		}
 
 		this.initialized = true;
@@ -73,7 +69,7 @@ export class Hyperbole {
 			await Promise.all(options.after.map(AfterHandler => {
 				const dependencies = this.Dependencies(AfterHandler.$inject);
 				return new AfterHandler(...dependencies).task();
-			}))
+			}));
 		}
 	}
 
@@ -107,7 +103,7 @@ export class Hyperbole {
 	public Route(route: Hyperbole.Route) {
 		const dependencies = this.Dependencies(route.$inject);
 		const routeInstance = new route(...dependencies);
-		this.router.route(route.$route, async (context: Router.Context) => {
+		this.router.register(route.$route, async (context: Router.Context) => {
 			/** run route $before middleware */
 			if(route.$before) {
 				for(const middleware of route.$before) {
@@ -186,8 +182,6 @@ export module Hyperbole {
 		providers?: Hyperbole.Provider[];
 		routes?: Hyperbole.Route[];
 		templates?: Hyperbole.Template[];
-
-		radio?: boolean;
 	}
 
 	export module start {

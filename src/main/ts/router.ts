@@ -6,16 +6,20 @@ import * as urlPattern from 'url-pattern';
 /** todo: remove this dependency _or_ repackage as something that doesn't use yucky side effects */
 import 'onpushstate';
 
+import { Radio } from './radio';
+
 export class Router {
 	public context: Router.Context;
 	public paths: Router.Path.set = {};
 
-	constructor() {
+	constructor(
+		public radio: Radio,
+	) {
     window.addEventListener('popstate', () => this.handleEvent(), false);
     window.addEventListener('pushstate', () => this.handleEvent(), false);
 	}
 
-	public route(pathStr: string, pathHandler: Router.Path.handler) {
+	public register(pathStr: string, pathHandler: Router.Path.handler) {
 		this.paths[pathStr] = {
 			pattern: new urlPattern(pathStr),
 			handler: pathHandler,
@@ -35,7 +39,7 @@ export class Router {
     anchor.click();
 	}
 
-	private handleEvent() {
+	private async handleEvent() {
 		for(const pathStr in this.paths) {
 			const path = this.paths[pathStr];
 			const match = path.pattern.match(location.pathname);
@@ -44,7 +48,8 @@ export class Router {
 					path: location.pathname,
 					params: match,
 				}
-				return path.handler(this.context);
+				await path.handler(this.context);
+				return this.radio.emit(`router:update`, this.context);
 			}
 		}
 	}
