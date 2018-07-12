@@ -1,7 +1,7 @@
 node_modules/
-example/
-test/
-src/
+/example/
+/test/
+/src/
 .travis.yml
 tsconfig.json
 tsconfig.test.json
