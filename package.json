@@ -4,6 +4,9 @@
   "description": "Wrapper for the awesome hyperHtml renderer written in Typescript.",
   "main": "dist/index.js",
   "types": "dist/index.js",
+  "sideEffects": [
+    "./dist/router.js"
+  ],
   "scripts": {
     "watch": "NODE_ENV=development tsc --project tsconfig.json --watch",
     "build:dev": "NODE_ENV=development tsc --project tsconfig.json",
