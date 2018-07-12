@@ -2,8 +2,8 @@
  * Hyperbolé - https://github.com/8eecf0d2/hyperbole
  */
 
-/** todo: switch to url-pattern package */
-import * as pathToRegex from 'path-to-regexp';
+import * as urlPattern from 'url-pattern';
+/** todo: remove this dependency _or_ repackage as something that doesn't use yucky side effects */
 import 'onpushstate';
 
 export class Router {
@@ -15,13 +15,9 @@ export class Router {
     window.addEventListener('pushstate', () => this.handleEvent(), false);
 	}
 
-	public get(pathStr: string, pathHandler: Router.Path.handler) {
-		const pathKeys: pathToRegex.Key[] = [];
-		const pathRegExp = this.parsePath(pathStr, pathKeys);
-		//@ts-ignore
-		this.paths[pathRegExp] = {
-			keys: pathKeys,
-			regex: pathRegExp,
+	public route(pathStr: string, pathHandler: Router.Path.handler) {
+		this.paths[pathStr] = {
+			pattern: new urlPattern(pathStr),
 			handler: pathHandler,
 		};
 	}
@@ -33,55 +29,42 @@ export class Router {
     const html = document.documentElement;
     const anchor = document.createElement('a');
     anchor.href = path;
+    /** important that this uses "function()" syntax to correctly scope "this" */
     anchor.onclick = function() { this.parentNode.removeChild(this) };
     html.insertBefore(anchor, html.firstChild);
     anchor.click();
 	}
 
 	private handleEvent() {
-		for(const pathRegExp in this.paths) {
-			const path = this.paths[pathRegExp];
-			const match = path.regex.exec(location.pathname);
+		for(const pathStr in this.paths) {
+			const path = this.paths[pathStr];
+			const match = path.pattern.match(location.pathname);
 			if(match) {
-				this.handleMatch(path, match);
+				this.context = {
+					path: location.pathname,
+					params: match,
+				}
+				return path.handler(this.context);
 			}
 		}
 	}
 
-	private handleMatch(path: Router.Path, result: RegExpExecArray) {
-		this.context = {
-			params: this.deconstructParams(path.keys, result),
-		};
-		path.handler(this.context);
-	}
-
-	private deconstructParams(keys: pathToRegex.Key[], result: RegExpExecArray) {
-		const params: { [key: string]: string } = {};
-		for(const key in keys) {
-			params[keys[key].name] = result[parseInt(key) + 1];
-		}
-		return params;
-	}
-
-	private parsePath(path: string, keys: pathToRegex.Key[]) {
-		return pathToRegex(path, keys);
-	}
 }
 
 export module Router {
 	export module Path {
 		export type handler = (context: Router.Context) => void;
 		export interface set {
-			[RegExp: string]: Router.Path;
+			[Pattern: string]: Router.Path;
 		}
 	}
 	export interface Path {
-		keys: pathToRegex.Key[];
-		regex: RegExp;
+		pattern: urlPattern;
 		handler: Router.Path.handler;
 	}
 
 	export interface Context {
+		path: string;
 		params: {
 			[name: string]: string;
 		}
