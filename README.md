@@ -7,25 +7,25 @@ Wrapper for the awesome hyperHtml renderer written in Typescript.
 Install with yarn or npm​
 
 ```bash
-yarn add hyperbole
+yarn add jagwah
 ```
 
 Import and start using
 
 ```ts
-import { Jagwah } from 'hyperbole';
+import { Jagwah } from 'jagwah';
 ​
-const hyperbole = new Jagwah();
-hyperbole.provider(...);
-hyperbole.template(...);
+const jagwah = new Jagwah();
+jagwah.provider(...);
+jagwah.template(...);
 ...
-hyperbole.start();
+jagwah.start();
 ```
 
 
-### [Documentation](https://github.com/8eecf0d2/hyperbole/wiki)
+### [Documentation](https://github.com/8eecf0d2/jagwah/wiki)
 
-All of the documentation can be found in [this repo's github wiki](https://github.com/8eecf0d2/hyperbole/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation will be the focus of release `0.0.2`, for now the focus is features and stability in [`0.0.1`](https://github.com/8eecf0d2/hyperbole/projects/1).
+All of the documentation can be found in [this repo's github wiki](https://github.com/8eecf0d2/jagwah/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation will be the focus of release `0.0.2`, for now the focus is features and stability in [`0.0.1`](https://github.com/8eecf0d2/jagwah/projects/1).
 
 ### Overview
 
@@ -37,9 +37,9 @@ Below is a really simple example of jagwah, it uses a single Template without Pr
 
 `main.ts`
 ```ts
-import { Jagwah, Selector } from 'hyperbole';
+import { Jagwah, Selector } from 'jagwah';
 ​
-const hyperbole = new Jagwah();
+const jagwah = new Jagwah();
 ​
 @Template('hello-world')
 @Selector('#hello-world')
@@ -53,9 +53,9 @@ class HelloWorldTemplate {
   }
 }
 ​
-hyperbole.template(HelloWorldTemplate);
+jagwah.template(HelloWorldTemplate);
 ​
-hyperbole.start();
+jagwah.start();
 ```
 
 `index.html`
@@ -66,12 +66,12 @@ hyperbole.start();
 ```
 
 `result.png`
-![hello world with hyperbole](https://i.imgur.com/Yu7GYaK.png)
+![hello world with jagwah](https://i.imgur.com/Yu7GYaK.png)
 
 ### Credits
 
 All of the really hard work was done by [WebReflection](https://github.com/WebReflection) and the contributors of [hyperHtml](https://github.com/WebReflection/hyperHtml/graphs/contributors).
 
-[jagwah](https://github.com/8eecf0d2/hyperbole) was created by [Contributors](https://github.com/8eecf0d2/hyperbole/graphs/contributors)
+[jagwah](https://github.com/8eecf0d2/jagwah) was created by [Contributors](https://github.com/8eecf0d2/jagwah/graphs/contributors)
 
 [hyperHtml](https://github.com/WebReflection/hyperHtml) was created by [WebReflection](https://github.com/WebReflection)
