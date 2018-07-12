@@ -149,7 +149,7 @@ export class Jagwah {
 	/**
 	 * Handle middleware for route
 	 */
-	public async Middleware(middleware: Jagwah.Middleware.instance) {
+	private async Middleware(middleware: Jagwah.Middleware.instance) {
 		const middlewareDependencies = this.Dependencies(middleware.$inject);
 		return middleware.task(...middlewareDependencies);
 	}
