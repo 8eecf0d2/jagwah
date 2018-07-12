@@ -1,6 +1,6 @@
 {
-  "name": "hyperbole",
-  "version": "0.0.1",
+  "name": "jagwah",
+  "version": "0.0.2",
   "description": "Wrapper for the awesome hyperHtml renderer written in Typescript.",
   "main": "dist/index.js",
   "types": "dist/index.js",
@@ -25,10 +25,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/8eecf0d2/hyperbole.git"
+    "url": "git+https://github.com/8eecf0d2/jagwah.git"
   },
   "bugs": {
-    "url": "https://github.com/8eecf0d2/hyperbole/issues"
+    "url": "https://github.com/8eecf0d2/jagwah/issues"
   },
-  "homepage": "https://github.com/8eecf0d2/hyperbole#readme"
+  "homepage": "https://github.com/8eecf0d2/jagwah#readme"
 }

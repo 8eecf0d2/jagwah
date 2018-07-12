@@ -1,14 +1,14 @@
 /*
- * Hyperbolé - https://github.com/8eecf0d2/hyperbole
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Hyperbole, Helpers } from '../';
+import { Jagwah, Helpers } from '../';
 
 export class SyncProvider {
 	static $provider = '$sync';
-	static $inject = ['$hyperbole'];
+	static $inject = ['$Jagwah'];
 	constructor(
-		private $hyperbole: Hyperbole,
+		private $jagwah: Jagwah,
 	) {}
 
 	public update(obj: any, path: string) {
@@ -23,7 +23,7 @@ export class SyncProvider {
 		return (el: any) => {
 			Helpers.safeSet(obj, path, el.target.value);
 			if(update === true) {
-				this.$hyperbole.update();
+				this.$jagwah.update();
 			}
 		}
 	}

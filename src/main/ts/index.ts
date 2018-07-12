@@ -1,5 +1,5 @@
 /*
- * Hyperbolé - https://github.com/8eecf0d2/hyperbole
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
 import * as hyperhtml from 'hyperhtml/cjs';
@@ -11,24 +11,24 @@ import { Providers } from './providers';
 export * from './helpers';
 export * from './decorators';
 
-export class Hyperbole {
+export class Jagwah {
 	public initialized: boolean = false;
 	public radio: Radio = new Radio();
 	public router: Router = new Router(this.radio);
 
 	public constants: { [key: string]: any };
 
-	private providers: Hyperbole.Provider.set = {};
-	private templates: Hyperbole.Template.set = {};
+	private providers: Jagwah.Provider.set = {};
+	private templates: Jagwah.Template.set = {};
 
 	constructor(
-		options: Hyperbole.options = {},
+		options: Jagwah.options = {},
 	) {
 		/** initialize constants */
 		this.constants = options.constants;
 
-		/** initialize "this" as provider $hyperbole */
-		this.providers['$hyperbole'] = this;
+		/** initialize "this" as provider $Jagwah */
+		this.providers['$jagwah'] = this;
 
 		/** initialize providers */
 		if(options.providers) {
@@ -53,8 +53,8 @@ export class Hyperbole {
 		}
 	}
 
-	/** start the hyperbole application */
-	public async start(options: Hyperbole.start.options = {}) {
+	/** start the Jagwah application */
+	public async start(options: Jagwah.start.options = {}) {
 		if(options.before) {
 			await Promise.all(options.before.map(BeforeHandler => {
 				const dependencies = this.Dependencies(BeforeHandler.$inject);
@@ -76,9 +76,9 @@ export class Hyperbole {
 	/**
 	 * Initialize a Template for rendering.
 	 */
-	public Template(template: Hyperbole.Template) {
+	public Template(template: Jagwah.Template) {
 		const dependencies = this.Dependencies(template.$inject);
-		const _template: Hyperbole.Template.copy = {
+		const _template: Jagwah.Template.copy = {
 			$selector: template.$selector,
 			$template: template.$template,
 			$element: hyperhtml.bind(document.querySelectorAll(template.$selector)[0]),
@@ -92,7 +92,7 @@ export class Hyperbole {
 	/**
 	 * Initialize a Provider for state management.
 	 */
-	public Provider(provider: Hyperbole.Provider) {
+	public Provider(provider: Jagwah.Provider) {
 		const dependencies = this.Dependencies(provider.$inject);
 		this.providers[provider.$provider] = new provider(...dependencies);
 	}
@@ -100,7 +100,7 @@ export class Hyperbole {
 	/**
 	 * Add a route with templates / callbacks
 	 */
-	public Route(route: Hyperbole.Route) {
+	public Route(route: Jagwah.Route) {
 		const dependencies = this.Dependencies(route.$inject);
 		const routeInstance = new route(...dependencies);
 		this.router.register(route.$route, async (context: Router.Context) => {
@@ -143,7 +143,7 @@ export class Hyperbole {
 	/**
 	 * Handle middleware for route
 	 */
-	public async Middleware(middleware: Hyperbole.Middleware.instance) {
+	public async Middleware(middleware: Jagwah.Middleware.instance) {
 		const middlewareDependencies = this.Dependencies(middleware.$inject);
 		return middleware.task(...middlewareDependencies);
 	}
@@ -151,7 +151,7 @@ export class Hyperbole {
 	/**
 	 * Get dependencies from array of dependency names.
 	 */
-	private Dependencies(names: Hyperbole.Provider.name[] = []): Hyperbole.Provider.instance[] {
+	private Dependencies(names: Jagwah.Provider.name[] = []): Jagwah.Provider.instance[] {
 		const dependencies = [];
 		for(const injectName of names) {
 			if(this.providers[injectName]) {
@@ -171,7 +171,7 @@ export class Hyperbole {
 	}
 }
 
-export module Hyperbole {
+export module Jagwah {
 	/** hyperHtml */
 	export const wire = hyperhtml.wire;
 	export const bind = hyperhtml.bind;
@@ -179,9 +179,9 @@ export module Hyperbole {
 
 	export interface options {
 		constants?: { [key: string]: any };
-		providers?: Hyperbole.Provider[];
-		routes?: Hyperbole.Route[];
-		templates?: Hyperbole.Template[];
+		providers?: Jagwah.Provider[];
+		routes?: Jagwah.Route[];
+		templates?: Jagwah.Template[];
 	}
 
 	export module start {
@@ -195,7 +195,7 @@ export module Hyperbole {
 	export module Provider {
 		export type name = string;
 		export interface set {
-			[ProviderName: string]: Hyperbole.Provider.instance;
+			[ProviderName: string]: Jagwah.Provider.instance;
 		}
 		export interface instance {}
 
@@ -204,9 +204,9 @@ export module Hyperbole {
 		export type HttpProvider = Providers.HttpProvider;
 	}
 	export interface Provider {
-		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Provider.instance;
-		$provider?: Hyperbole.Provider.name;
-		$inject?: Hyperbole.Provider.name[];
+		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Provider.instance;
+		$provider?: Jagwah.Provider.name;
+		$inject?: Jagwah.Provider.name[];
 	}
 
 	/** Template */
@@ -216,23 +216,23 @@ export module Hyperbole {
 		export type element = hyperhtml.BoundTemplateFunction<Element>;
 		export type render = hyperhtml.WiredTemplateFunction;
 		export interface set {
-			[TemplateName: string]: Hyperbole.Template.copy;
+			[TemplateName: string]: Jagwah.Template.copy;
 		}
 		export interface copy {
 			$selector: string;
 			$template: string;
-			$element: Hyperbole.Template.element;
+			$element: Jagwah.Template.element;
 			instance: any;
 		}
 		export interface instance {
-			render: (render: Hyperbole.Template.render) => HTMLElement|Promise<HTMLElement>;
+			render: (render: Jagwah.Template.render) => HTMLElement|Promise<HTMLElement>;
 		}
 	}
 	export interface Template {
-		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Template.instance;
-		$template?: Hyperbole.Template.name;
-		$selector?: Hyperbole.Template.selector;
-		$inject?: Hyperbole.Provider.name[];
+		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Template.instance;
+		$template?: Jagwah.Template.name;
+		$selector?: Jagwah.Template.selector;
+		$inject?: Jagwah.Provider.name[];
 	}
 
 	/** Route */
@@ -245,26 +245,26 @@ export module Hyperbole {
 		}
 	}
 	export interface Route {
-		new(...dependencies: Hyperbole.Provider.instance[]): Hyperbole.Route.instance;
-		$route?: Hyperbole.Route.path;
-		$templates?: Hyperbole.Template[];
-		$inject?: Hyperbole.Provider.name[];
-		$before?: Hyperbole.Middleware.instance[];
-		$after?: Hyperbole.Middleware.instance[];
+		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Route.instance;
+		$route?: Jagwah.Route.path;
+		$templates?: Jagwah.Template[];
+		$inject?: Jagwah.Provider.name[];
+		$before?: Jagwah.Middleware.instance[];
+		$after?: Jagwah.Middleware.instance[];
 	}
 
 	/** Middleware */
 	export module Middleware {
 		export interface instance {
-			task: (...dependencies: Hyperbole.Provider.instance[]) => void;
+			task: (...dependencies: Jagwah.Provider.instance[]) => void;
 			/** todo: not sure how this is supposed to work lol */
-			$inject?: Hyperbole.Provider.name[];
+			$inject?: Jagwah.Provider.name[];
 		}
 	}
 	export interface Middleware {
-		new(...params: any[]): Hyperbole.Route.instance;
+		new(...params: any[]): Jagwah.Route.instance;
 		/** todo: not sure how this is supposed to work lol */
-		$inject?: Hyperbole.Provider.name[];
+		$inject?: Jagwah.Provider.name[];
 	}
 
 	export const ObjectToArray = <T = any>(obj: {[key: string]: T}): T[] => {

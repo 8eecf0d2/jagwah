@@ -1,4 +1,4 @@
-# hyperbolé
+# jagwah
 
 Wrapper for the awesome hyperHtml renderer written in Typescript.
 
@@ -13,9 +13,9 @@ yarn add hyperbole
 Import and start using
 
 ```ts
-import { Hyperbole } from 'hyperbole';
+import { Jagwah } from 'hyperbole';
 ​
-const hyperbole = new Hyperbole();
+const hyperbole = new Jagwah();
 hyperbole.provider(...);
 hyperbole.template(...);
 ...
@@ -29,28 +29,28 @@ All of the documentation can be found in [this repo's github wiki](https://githu
 
 ### Overview
 
-hyperbolé is a small wrapper for hyperHtml and a couple other tools, it feels a bit like AngularJs mixed with React, ~~for the most part it get's out of the way and lets you write web applications however you want~~ _as of right now it's got some strong opinions about how you should write web applications with it._
+jagwah is a small wrapper for hyperHtml and a couple other tools, it feels a bit like AngularJs mixed with React, ~~for the most part it get's out of the way and lets you write web applications however you want~~ _as of right now it's got some strong opinions about how you should write web applications with it._
 
 ### Example
 
-Below is a really simple example of hyperbolé, it uses a single Template without Providers or Routes.
+Below is a really simple example of jagwah, it uses a single Template without Providers or Routes.
 
 `main.ts`
 ```ts
-import { Hyperbole, Selector } from 'hyperbole';
+import { Jagwah, Selector } from 'hyperbole';
 ​
-const hyperbole = new Hyperbole();
+const hyperbole = new Jagwah();
 ​
 @Template('hello-world')
 @Selector('#hello-world')
 class HelloWorldTemplate {
-    constructor(
-        private render: Hyperbole.template.render
-    ) {
-        return render`
-            <h1>Hello World</h1>
-        `
-    }
+  constructor(
+    private render: Jagwah.template.render
+  ) {
+    return render`
+      <h1>Hello World</h1>
+    `;
+  }
 }
 ​
 hyperbole.template(HelloWorldTemplate);
@@ -61,7 +61,7 @@ hyperbole.start();
 `index.html`
 ```html
 <body>
-    <div id="hello-world"></div>
+	<div id="hello-world"></div>
 </body>
 ```
 
@@ -72,6 +72,6 @@ hyperbole.start();
 
 All of the really hard work was done by [WebReflection](https://github.com/WebReflection) and the contributors of [hyperHtml](https://github.com/WebReflection/hyperHtml/graphs/contributors).
 
-[hyperbolé](https://github.com/8eecf0d2/hyperbole) was created by [Contributors](https://github.com/8eecf0d2/hyperbole/graphs/contributors)
+[jagwah](https://github.com/8eecf0d2/hyperbole) was created by [Contributors](https://github.com/8eecf0d2/hyperbole/graphs/contributors)
 
 [hyperHtml](https://github.com/WebReflection/hyperHtml) was created by [WebReflection](https://github.com/WebReflection)
