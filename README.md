@@ -1,6 +1,6 @@
 # Jagwah
 
-Simple web application framework with HyperHTML & Typescript.
+Jagwah (pronounced [/dʒægwæh/](https://itinerarium.github.io/phoneme-synthesis/)) is a tiny web application framework with HyperHTML & Typescript.
 
 ### Getting Started
 
@@ -30,7 +30,7 @@ All of the documentation can be found in [the github wiki](https://github.com/8e
 
 ### Overview
 
-jagwah is a small wrapper for hyperHtml and a couple other tools, it feels a bit like AngularJs mixed with React, ~~for the most part it get's out of the way and lets you write web applications however you want~~ _as of right now it's got some strong opinions about how you should write web applications with it._
+Jagwah wraps around hyperHtml to provide a simple API for building web applications with Routes, Templates, Dependency Injection and a few other things. It's intended for use with Typescript but works equally as well with Javascript, not abstracting too far away from core language features.
 
 ### Example
 
