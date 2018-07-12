@@ -3,8 +3,8 @@
  */
 
 import * as urlPattern from 'url-pattern';
-/** todo: remove this dependency _or_ repackage as something that doesn't use yucky side effects */
-import 'onpushstate';
+
+import { handleStateEvent } from './state-event-handler';
 
 export class Router {
 	public context: Router.Context;
@@ -12,8 +12,9 @@ export class Router {
 
 	constructor(
 	) {
-    window.addEventListener('popstate', () => this.handleEvent(), false);
-    window.addEventListener('pushstate', () => this.handleEvent(), false);
+		document.addEventListener('click', handleStateEvent, true);
+		window.addEventListener('popstate', () => this.handleEvent(), false);
+		window.addEventListener('pushstate', () => this.handleEvent(), false);
 	}
 
 	public register(pathStr: string, pathHandler: Router.Path.handler) {
@@ -27,13 +28,13 @@ export class Router {
 		if(path === location.pathname) {
 			return this.handleEvent();
 		}
-    const html = document.documentElement;
-    const anchor = document.createElement('a');
-    anchor.href = path;
-    /** important that this uses "function()" syntax to correctly scope "this" */
-    anchor.onclick = function() { this.parentNode.removeChild(this) };
-    html.insertBefore(anchor, html.firstChild);
-    anchor.click();
+		const html = document.documentElement;
+		const anchor = document.createElement('a');
+		anchor.href = path;
+		/** important that this uses "function()" syntax to correctly scope "this" */
+		anchor.onclick = function() { this.parentNode.removeChild(this) };
+		html.insertBefore(anchor, html.firstChild);
+		anchor.click();
 	}
 
 	private async handleEvent() {
