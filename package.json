@@ -10,7 +10,9 @@
   "scripts": {
     "watch": "NODE_ENV=development tsc --project tsconfig.json --watch",
     "build:dev": "NODE_ENV=development tsc --project tsconfig.json",
-    "build": "NODE_ENV=production tsc --project tsconfig.json"
+    "build": "NODE_ENV=production tsc --project tsconfig.json",
+    "prepublish:build": "yarn build",
+    "publish:build": "npm publish"
   },
   "author": "8eecf0d2",
   "license": "ISC",
