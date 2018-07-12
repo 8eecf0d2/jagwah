@@ -3,10 +3,11 @@
  */
 
 export class Radio {
-	private listeners: IRadioListener[] = [];
+	private listeners: Radio.Listener[] = [];
+
 	constructor() {}
 
-	public listen(name: string, callback: IRadioListenerCallback) {
+	public listen(name: string, callback: Radio.Listener.callback) {
 		this.listeners.push({ name: name, callback: callback });
 	}
 
@@ -17,12 +18,15 @@ export class Radio {
 			}
 		}
 	}
-
 }
 
-export interface IRadioListener {
-	name: string;
-	callback: IRadioListenerCallback;
+export module Radio {
+	export module Listener {
+		export type name = string;
+		export type callback = (data?: any) => void;
+	}
+	export interface Listener {
+		name: Radio.Listener.name;
+		callback: Radio.Listener.callback;
+	}
 }
-
-export type IRadioListenerCallback = (data?: any) => void;

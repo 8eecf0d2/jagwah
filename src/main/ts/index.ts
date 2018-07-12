@@ -17,14 +17,13 @@ export class Hyperbole {
 	public radio: Radio = new Radio();
 	public constants: { [key: string]: any };
 
-	/** all providers */
 	private providers: Hyperbole.Provider.set = {};
-	/** all templates */
 	private templates: Hyperbole.Template.set = {};
 
 	constructor(
 		options: Hyperbole.options = {},
 	) {
+		/** initialize constants */
 		this.constants = options.constants;
 
 		/** initialize "this" as provider $hyperbole */
@@ -102,8 +101,8 @@ export class Hyperbole {
 	 */
 	public Route(route: Hyperbole.Route) {
 		const dependencies = this.Dependencies(route.$inject);
-		const _route = new route(...dependencies);
-		this.router.get(route.$route, async (context: Router.Context) => {
+		const routeInstance = new route(...dependencies);
+		this.router.route(route.$route, async (context: Router.Context) => {
 			/** run route $before middleware */
 			if(route.$before) {
 				for(const middleware of route.$before) {
@@ -112,8 +111,8 @@ export class Hyperbole {
 			}
 
 			/** run route before() method */
-			if(_route.before) {
-				await _route.before(context)
+			if(routeInstance.before) {
+				await routeInstance.before(context)
 			}
 
 			/** set route templates */
@@ -127,8 +126,8 @@ export class Hyperbole {
 			this.update();
 
 			/** run route after() method */
-			if(_route.after) {
-				await _route.after(context)
+			if(routeInstance.after) {
+				await routeInstance.after(context)
 			}
 
 			/** run route $after middleware */
