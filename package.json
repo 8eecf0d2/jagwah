@@ -13,11 +13,12 @@
     "prebuild:test": "yarn build",
     "build:test": "tsc --project tsconfig.test.json",
     "pretest": "yarn build:test",
-    "test": "node test/index.spec.js"
+    "test": "node test/index.js"
   },
   "author": "8eecf0d2",
   "license": "ISC",
   "devDependencies": {
+    "should": "^13.2.1",
     "typescript": "^2.9.0-rc"
   },
   "dependencies": {
