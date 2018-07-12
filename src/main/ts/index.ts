@@ -14,7 +14,8 @@ export * from './decorators';
 export class Hyperbole {
 	public initialized: boolean = false;
 	public router: Router = new Router();
-	public radio: Radio = new Radio();
+	public radio: Radio;
+
 	public constants: { [key: string]: any };
 
 	private providers: Hyperbole.Provider.set = {};
@@ -25,6 +26,10 @@ export class Hyperbole {
 	) {
 		/** initialize constants */
 		this.constants = options.constants;
+
+		if(options.radio === true) {
+			this.radio = new Radio();
+		}
 
 		/** initialize "this" as provider $hyperbole */
 		this.providers['$hyperbole'] = this;
@@ -181,6 +186,8 @@ export module Hyperbole {
 		providers?: Hyperbole.Provider[];
 		routes?: Hyperbole.Route[];
 		templates?: Hyperbole.Template[];
+
+		radio?: boolean;
 	}
 
 	export module start {
