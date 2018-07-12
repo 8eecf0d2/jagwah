@@ -14,7 +14,7 @@ export * from './decorators';
 export class Jagwah {
 	public initialized: boolean = false;
 	public radio: Radio = new Radio();
-	public router: Router = new Router(this.radio);
+	public router: Router = new Router();
 
 	public constants: { [key: string]: any };
 
@@ -71,6 +71,7 @@ export class Jagwah {
 				return new AfterHandler(...dependencies).task();
 			}));
 		}
+		this.radio.emit(`jagwah:start`);
 	}
 
 	/**
@@ -87,6 +88,7 @@ export class Jagwah {
 
 		/** add / replace template in active templates (based on selector) */
 		this.templates[_template.$selector] = _template;
+		this.radio.emit(`jagwah:template:register`, template.$template);
 	}
 
 	/**
@@ -95,15 +97,18 @@ export class Jagwah {
 	public Provider(provider: Jagwah.Provider) {
 		const dependencies = this.Dependencies(provider.$inject);
 		this.providers[provider.$provider] = new provider(...dependencies);
+		this.radio.emit(`jagwah:provider:register`, provider.$provider);
 	}
 
 	/**
-	 * Add a route with templates / callbacks
+	 * Initialize a Route for state / templates changes.
 	 */
 	public Route(route: Jagwah.Route) {
 		const dependencies = this.Dependencies(route.$inject);
 		const routeInstance = new route(...dependencies);
 		this.router.register(route.$route, async (context: Router.Context) => {
+			this.radio.emit(`jagwah:router:update:before`, context);
+
 			/** run route $before middleware */
 			if(route.$before) {
 				for(const middleware of route.$before) {
@@ -137,6 +142,7 @@ export class Jagwah {
 					await this.Middleware(middleware);
 				}
 			}
+			this.radio.emit(`jagwah:router:update:after`, context);
 		});
 	}
 
@@ -168,6 +174,7 @@ export class Jagwah {
 		for(const template in this.templates) {
 			this.templates[template].instance.render(this.templates[template].$element);
 		}
+		this.radio.emit(`jagwah:update`);
 	}
 }
 
