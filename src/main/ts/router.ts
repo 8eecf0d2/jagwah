@@ -6,14 +6,11 @@ import * as urlPattern from 'url-pattern';
 /** todo: remove this dependency _or_ repackage as something that doesn't use yucky side effects */
 import 'onpushstate';
 
-import { Radio } from './radio';
-
 export class Router {
 	public context: Router.Context;
 	public paths: Router.Path.set = {};
 
 	constructor(
-		public radio: Radio,
 	) {
     window.addEventListener('popstate', () => this.handleEvent(), false);
     window.addEventListener('pushstate', () => this.handleEvent(), false);
@@ -48,8 +45,7 @@ export class Router {
 					path: location.pathname,
 					params: match,
 				}
-				await path.handler(this.context);
-				return this.radio.emit(`router:update`, this.context);
+				return path.handler(this.context);
 			}
 		}
 	}
