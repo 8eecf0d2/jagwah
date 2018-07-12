@@ -1,8 +1,8 @@
 /*
- * Hyperbolé - https://github.com/8eecf0d2/hyperbole
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Hyperbole, Helpers } from '../';
+import { Helpers } from '../';
 
 export class HttpProvider {
 	static $provider = '$http';
