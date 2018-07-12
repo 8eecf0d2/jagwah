@@ -46,7 +46,7 @@ const jagwah = new Jagwah();
 @Selector('#hello-world')
 class HelloWorldTemplate {
   constructor() {}
-  return render(private render: Jagwah.Template.render) {
+  public render(private render: Jagwah.Template.render) {
     return render`
       <h1>Hello World</h1>
     `;
