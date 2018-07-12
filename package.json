@@ -10,6 +10,7 @@
   "scripts": {
     "watch": "tsc --project tsconfig.json --watch",
     "build": "tsc --project tsconfig.json",
+    "prebuild:test": "yarn build",
     "build:test": "tsc --project tsconfig.test.json",
     "pretest": "yarn build:test",
     "test": "node test/index.spec.js"
