@@ -10,7 +10,7 @@ export class Radio {
 
 	public listen(name: string, callback: Radio.Listener.callback): Radio.Listener.ref {
 		if(!this.listeners[name]) {
-			this.listeners.name = [];
+			this.listeners[name] = [];
 		}
 
 		this.listeners[name].push({ id: String(this.int++), callback: callback });
