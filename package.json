@@ -1,6 +1,6 @@
 {
   "name": "jagwah",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Wrapper for the awesome hyperHtml renderer written in Typescript.",
   "main": "dist/index.js",
   "types": "dist/index.js",
