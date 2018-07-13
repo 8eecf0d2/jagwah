@@ -33,6 +33,8 @@ jagwah.start();
 
 All of the documentation can be found in [the github wiki](https://github.com/8eecf0d2/jagwah/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation is the focus of minor release [`0.1.0`](https://github.com/8eecf0d2/jagwah/projects/4).
 
+All examples are stored in the [`examples` branch](https://github.com/8eecf0d2/jagwah/tree/examples)
+
 ### Overview
 
 Jagwah wraps around hyperHtml to provide a simple API for building web applications with Routes, Templates, Dependency Injection and a few other things. It's intended for use with Typescript but works equally as well with Javascript, not abstracting too far away from core language features.
