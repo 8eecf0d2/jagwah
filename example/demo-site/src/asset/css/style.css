@@ -1,0 +1,52 @@
+/** libs */
+@import './lib/bass.css';
+@import './lib/vars.css';
+@import './lib/hljs/ocean.css';
+
+/** fonts */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+/** components */
+@import './component/nav.css';
+@import './component/hero.css';
+@import './component/table.css';
+
+body {
+	font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+	font-size: 18px;
+	font-weight: 300;
+	background-color: white;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.headbutt[id]::before {
+  display: block;
+  content: " ";
+  margin-top: -1.5rem;
+  height: 1.5rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+code {
+	padding: 0rem .25rem;
+	font-size: 1rem;
+	background-color: var(--color-mute);
+	color: var(--color-red);
+	border: 1px solid var(--color-undercoat);
+	box-shadow: 2px 2px 0px var(--color-undercoat);
+}
+
+pre.hljs {
+	padding: .75rem 1rem;
+	margin-bottom: 1.5rem;
+	background-color: var(--color-mute);
+	color: var(--color-steel);
+	border: 1px solid var(--color-undercoat);
+	border-radius: 3px;
+}
