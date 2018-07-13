@@ -1,6 +1,9 @@
 # Jagwah
 
-[![Travis CI badge](https://travis-ci.org/8eecf0d2/jagwah.svg?branch=master)](https://travis-ci.org/) [![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/jagwah.svg)](https://greenkeeper.io/)
+[![Travis CI badge](https://travis-ci.org/8eecf0d2/jagwah.svg?branch=master)](https://travis-ci.org/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/jagwah.svg)](https://greenkeeper.io/)
+[![Bundlephobia minified badge](https://img.shields.io/bundlephobia/min/jagwah.svg)](https://bundlephobia.com/result?p=jagwah@latest)
+[![Bundlephobia minified zipped badge](https://img.shields.io/bundlephobia/minzip/jagwah.svg)](https://bundlephobia.com/result?p=jagwah@latest)
 
 Jagwah (pronounced [/dʒægwæh/](https://itinerarium.github.io/phoneme-synthesis/)) is a tiny web application framework with HyperHTML & Typescript.
 
@@ -28,7 +31,7 @@ jagwah.start();
 
 ### [Documentation](https://github.com/8eecf0d2/jagwah/wiki)
 
-All of the documentation can be found in [the github wiki](https://github.com/8eecf0d2/jagwah/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation is the focus of minor release [`0.2.0`](https://github.com/8eecf0d2/jagwah/projects/4).
+All of the documentation can be found in [the github wiki](https://github.com/8eecf0d2/jagwah/wiki), it's not perfectly up to date with the latest changes but provides a good overview. Organizing and validating documentation is the focus of minor release [`0.1.0`](https://github.com/8eecf0d2/jagwah/projects/4).
 
 ### Overview
 
@@ -40,7 +43,7 @@ Below is a really simple example of jagwah, it uses a single Template without Pr
 
 `main.ts`
 ```ts
-import { Jagwah, Selector } from 'jagwah';
+import { Jagwah, Selector, Template } from 'jagwah';
 ​
 const jagwah = new Jagwah();
 ​
@@ -48,7 +51,7 @@ const jagwah = new Jagwah();
 @Selector('#hello-world')
 class HelloWorldTemplate {
   constructor() {}
-  public render(private render: Jagwah.Template.render) {
+  public render(render: Jagwah.Template.render) {
     return render`
       <h1>Hello World</h1>
     `;
@@ -74,7 +77,3 @@ jagwah.update();
 ### Credits
 
 All of the really hard work was done by [WebReflection](https://github.com/WebReflection) and the contributors of [hyperHtml](https://github.com/WebReflection/hyperHtml/graphs/contributors).
-
-[Jagwah](https://github.com/8eecf0d2/jagwah) was created by [Contributors](https://github.com/8eecf0d2/jagwah/graphs/contributors)
-
-[hyperHtml](https://github.com/WebReflection/hyperHtml) was created by [WebReflection](https://github.com/WebReflection)
