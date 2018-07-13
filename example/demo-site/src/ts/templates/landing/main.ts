@@ -1,17 +1,17 @@
 /*
- * 8eecf0d2/hyperbole - 2018
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Hyperbole, Selector, Template } from 'hyperbole';
+import { Jagwah, Selector, Template } from 'jagwah';
 
 @Template('landing')
 @Selector('[main]')
 export class LandingTemplate {
 	constructor(
-		private hyperbole: Hyperbole
+		private jagwah: Jagwah
 	) {}
 
-	public render(renderer: Hyperbole.template.render) {
+	public render(renderer: Jagwah.template.render) {
 		return renderer`
 			<content class="col col-12">
 				<content class="col col-12 p4 hero-shape-0 flex">

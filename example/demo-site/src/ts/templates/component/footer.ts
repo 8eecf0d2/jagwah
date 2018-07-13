@@ -1,17 +1,17 @@
 /*
- * 8eecf0d2/hyperbole - 2018
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Selector, Template, Hyperbole } from 'hyperbole';
+import { Selector, Template, Jagwah } from 'jagwah';
 
 @Template('footer')
 @Selector('[footer]')
 export class FooterTemplate {
 	constructor(
-		private hyperbole: Hyperbole
+		private jagwah: Jagwah
 	) {}
 
-	public render(renderer: Hyperbole.template.render) {
+	public render(renderer: Jagwah.template.render) {
 		return renderer`
 			<footer class="col col-12 bg-mute">
 				<nav class="clearfix md-col-10 lg-col-8 mx-auto p2 mt1">
@@ -19,8 +19,8 @@ export class FooterTemplate {
 						<a href="/" class="btn">hyperbolé</a>
 					</div>
 					<div class="col col-right">
-						<a href="https://8eecf0d2.gitbook.io/hyperbole/" target="_blank" class="btn">Docs</a>
-						<a href="https://github.com/8eecf0d2/hyperbole" class="btn">Github</a>
+						<a href="https://8eecf0d2.gitbook.io/jagwah/" target="_blank" class="btn">Docs</a>
+						<a href="https://github.com/8eecf0d2/jagwah" class="btn">Github</a>
 					</div>
 				</nav>
 			</footer>

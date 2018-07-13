@@ -1,8 +1,8 @@
 /*
- * 8eecf0d2/hyperbole - 2018
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Hyperbole, Inject } from 'hyperbole';
+import { Jagwah, Inject } from 'jagwah';
 
 import * as routes from './routes';
 import * as templates from './templates';
@@ -12,11 +12,12 @@ export class BeforeStart {
 	async task() {}
 }
 
-const hyperapp = new Hyperbole();
+const jagwah = new Jagwah({
+	routes: Jagwah.ObjectToArray(routes),
+	templates: Jagwah.ObjectToArray(templates),
+});
 
-hyperapp.start({
-	routes: routes,
-	templates: templates,
+jagwah.start({
 	before: [BeforeStart],
 	after: []
 });

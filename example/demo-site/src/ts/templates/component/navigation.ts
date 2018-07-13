@@ -1,17 +1,17 @@
 /*
- * 8eecf0d2/hyperbole - 2018
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Hyperbole, Selector, Template } from 'hyperbole';
+import { Jagwah, Selector, Template } from 'jagwah';
 
 @Template('navigation')
 @Selector('[navigation]')
 export class NavigationTemplate {
 	constructor(
-		private hyperbole: Hyperbole
+		private jagwah: Jagwah
 	) {}
 
-	public render(renderer: Hyperbole.template.render) {
+	public render(renderer: Jagwah.template.render) {
 		return renderer`
 			<div class="col col-12">
 				<nav class="clearfix md-col-10 lg-col-8 mx-auto p2">
@@ -23,17 +23,17 @@ export class NavigationTemplate {
 	}
 
 	private leftNav() {
-		return Hyperbole.html`
+		return Jagwah.html`
 			<div class="col col-left">
 				<a href="/" class="btn btn-bold">hyperbolé</a>
 			</div>
 		`
 	}
 	private rightNav() {
-		return Hyperbole.html`
+		return Jagwah.html`
 			<div class="col col-right">
-				<a href="https://github.com/8eecf0d2/hyperbole/wiki" target="_blank" class="btn">Docs</a>
-				<a href="https://github.com/8eecf0d2/hyperbole" target="_blank" class="btn">Github</a>
+				<a href="https://github.com/8eecf0d2/jagwah/wiki" target="_blank" class="btn">Docs</a>
+				<a href="https://github.com/8eecf0d2/jagwah" target="_blank" class="btn">Github</a>
 			</div>
 			<div class="col col-right sm-show">
 				<a href="/getting-started" class="btn">Getting Started</a>

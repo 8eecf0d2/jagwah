@@ -1,8 +1,8 @@
 /*
- * 8eecf0d2/hyperbole - 2018
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Hyperbole, Route, Templates } from 'hyperbole';
+import { Jagwah, Route, Templates } from 'jagwah';
 import { LandingTemplate, GettingStartedTemplate } from '../templates';
 
 @Route('/')

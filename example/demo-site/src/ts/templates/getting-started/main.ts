@@ -1,8 +1,8 @@
 /*
- * 8eecf0d2/hyperbole - 2018
+ * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import { Hyperbole, Selector, Template } from 'hyperbole';
+import { Jagwah, Selector, Template } from 'jagwah';
 
 declare var require: any;
 
@@ -14,10 +14,10 @@ export class GettingStartedTemplate {
 	}
 
 	constructor(
-		private hyperbole: Hyperbole
+		private jagwah: Jagwah
 	) {}
 
-	public render(renderer: Hyperbole.template.render) {
+	public render(renderer: Jagwah.template.render) {
 		return renderer`
 			<content class="col col-12">
 				<content class="col col-12 p4 hero-shape-3 flex">
@@ -32,7 +32,7 @@ export class GettingStartedTemplate {
 				<content class="col col-12 p3">
 					<div class="md-col-10 lg-col-8 mx-auto">
 						${this.section(GettingStartedTemplate.markdown.overview)}
-						To learn more, <a href="https://8eecf0d2.gitbook.io/hyperbole/" target="_blank">read the docs on gitbook</a>.
+						To learn more, <a href="https://8eecf0d2.gitbook.io/jagwah/" target="_blank">read the docs on gitbook</a>.
 					</div>
 				</content>
 
@@ -41,7 +41,7 @@ export class GettingStartedTemplate {
 	}
 
 	public section(content: string) {
-		return Hyperbole.html`
+		return Jagwah.html`
 			<section class="col col-12">
 				${{ html: content }}
 			</section>

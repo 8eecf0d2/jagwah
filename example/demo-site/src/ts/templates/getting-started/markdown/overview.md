@@ -4,7 +4,7 @@ Install with yarn or npm​
 
 ```shell
 
-yarn add hyperbole
+yarn add jagwah
 
 ```
 
@@ -13,10 +13,10 @@ yarn add hyperbole
 Import and start using
 
 ```ts
-import { hyperbole } from 'hyperbole';
+import { jagwah } from 'jagwah';
 ​
-hyperbole.provider(...);
-hyperbole.template(...);
+jagwah.provider(...);
+jagwah.template(...);
 ...
-hyperbole.start();
+jagwah.start();
 ```
