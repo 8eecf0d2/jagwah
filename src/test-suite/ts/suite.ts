@@ -4,6 +4,7 @@
 
 export class TestSuite {
 	private tests: TestSuite.Test[] = [];
+	private failures: TestSuite.Failure[];
 
 	constructor (
 		public name: string
@@ -16,16 +17,32 @@ export class TestSuite {
 		});
 	}
 
-	public run() {
+
+	public async run() {
+		this.failures = [];
 		console.log(`\x1b[33m Suite:\x1b[0m ${this.name}\x1b[0m`);
 		for(const test of this.tests) {
 			try {
-				test.handler();
+				await test.handler();
 				console.log(` - \x1b[32mPass:\x1b[0m ${test.name}\x1b[0m`);
 			} catch(error) {
 				console.log(` - \x1b[31mFail:\x1b[0m ${test.name}\x1b[0m`);
-				throw error;
+				this.failures.push({
+					test: test.name,
+					error: error
+				});
+				continue
 			}
+		}
+		console.log('')
+		if(this.failures.length > 0) {
+			for(const failure of this.failures) {
+				console.log(`  \x1b[33mTest \x1b[31m${failure.test}\x1b[33m failed due to:\x1b[0m`);
+				console.log(`  ${failure.error.stack}`)
+				console.log('')
+			}
+			//@ts-ignore
+			process.exit(1);
 		}
 	}
 }
@@ -33,7 +50,11 @@ export class TestSuite {
 export module TestSuite {
 	export module Test {
 		export type name = string;
-		export type handler = () => void;
+		export type handler = () => Promise<void>;
+	}
+	export interface Failure {
+		test: TestSuite.Test.name;
+		error: Error;
 	}
 	export interface Test {
 		name: TestSuite.Test.name;

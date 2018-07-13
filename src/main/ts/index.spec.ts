@@ -2,12 +2,13 @@
  * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import * as assert from 'should';
+/** todo: use an actual test suite & run in a browser */
 import { TestSuite } from '../../test-suite/ts/suite';
+import * as assert from 'should';
 
 const testSuite = new TestSuite('Jagwah');
 
-testSuite.test('Stub', () => {
+testSuite.test('Stub', async () => {
 	assert(true).equal(true);
 });
 
