@@ -9,13 +9,13 @@
   ],
   "scripts": {
     "watch": "tsc --project tsconfig.json --watch",
-    "clean": "rm -r dist test",
+    "clean": "rm -rf dist",
     "prebuild": "yarn clean",
     "build": "tsc --project tsconfig.json",
     "prebuild:test": "yarn build",
     "build:test": "tsc --project tsconfig.test.json",
     "pretest": "yarn build:test",
-    "test": "node test/index.js"
+    "test": "node dist/test/main/ts/index.spec.js"
   },
   "author": "8eecf0d2",
   "license": "ISC",

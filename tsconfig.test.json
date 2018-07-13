@@ -7,8 +7,8 @@
 		"noImplicitAny": true,
 		"sourceMap": true,
 		"declaration": true,
-		"declarationDir": "./test",
-		"outDir": "./test",
+		"declarationDir": "./dist/test",
+		"outDir": "./dist/test",
 		"lib": [
 			"es6",
 			"es7",
@@ -16,9 +16,6 @@
 		]
 	},
 	"include": [
-		"src/test/**/*.ts"
-	],
-	"exclude": [
 		"src/main/**/*.ts"
 	]
 }
