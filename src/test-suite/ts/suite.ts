@@ -9,14 +9,14 @@ export class TestSuite {
 		public name: string
 	) {}
 
-	public test (name: string, handler: TestSuite.Test.handler) {
+	public test(name: string, handler: TestSuite.Test.handler) {
 		this.tests.push({
 			name: name,
 			handler: handler,
 		});
 	}
 
-	public run () {
+	public run() {
 		console.log(`\x1b[33m Suite:\x1b[0m ${this.name}\x1b[0m`);
 		for(const test of this.tests) {
 			try {
