@@ -27,6 +27,6 @@
     "webpack-serve": "^1.0.4"
   },
   "dependencies": {
-    "jagwah": "^0.0.5"
+    "jagwah": "^0.0.7"
   }
 }
