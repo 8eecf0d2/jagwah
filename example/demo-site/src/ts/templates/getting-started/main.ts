@@ -32,7 +32,7 @@ export class GettingStartedTemplate {
 				<content class="col col-12 p3">
 					<div class="md-col-10 lg-col-8 mx-auto">
 						${this.section(GettingStartedTemplate.markdown.overview)}
-						To learn more, <a href="https://8eecf0d2.gitbook.io/jagwah/" target="_blank">read the docs on gitbook</a>.
+						To learn more, <a href="https://github.com/8eecf0d2/jagwah/wiki" target="_blank">read the docs on github</a>.
 					</div>
 				</content>
 

@@ -19,7 +19,7 @@ export class FooterTemplate {
 						<a href="/" class="btn">Jagwah</a>
 					</div>
 					<div class="col col-right">
-						<a href="https://8eecf0d2.gitbook.io/jagwah/" target="_blank" class="btn">Docs</a>
+						<a href="https://github.com/8eecf0d2/jagwah/wiki" target="_blank" class="btn">Docs</a>
 						<a href="https://github.com/8eecf0d2/jagwah" class="btn">Github</a>
 					</div>
 				</nav>
