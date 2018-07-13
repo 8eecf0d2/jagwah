@@ -1,6 +1,6 @@
 # Jagwah
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/jagwah.svg)](https://greenkeeper.io/)
+[![Travis CI badge](https://travis-ci.org/8eecf0d2/jagwah.svg?branch=master)](https://travis-ci.org/) [![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/jagwah.svg)](https://greenkeeper.io/)
 
 Jagwah (pronounced [/dʒægwæh/](https://itinerarium.github.io/phoneme-synthesis/)) is a tiny web application framework with HyperHTML & Typescript.
 
