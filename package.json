@@ -15,6 +15,7 @@
     "prebuild:test": "yarn clean",
     "build:test": "tsc --project tsconfig.test.json",
     "pretest": "yarn build:test",
+    "posttest": "yarn build",
     "test": "node dist/test/main/ts/index.spec.js"
   },
   "author": "8eecf0d2",

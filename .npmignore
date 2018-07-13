@@ -1,6 +1,5 @@
 node_modules/
 /example/
-/test/
 /src/
 .travis.yml
 tsconfig.json
