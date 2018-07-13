@@ -2,11 +2,11 @@
 
 ### Getting Started
 
-Clone Jagwah
+Clone Jagwah Examples
 
 ```bash
-git clone https://github.com/8eecf0d2/jagwah.git
-cd jagwah/example/demo-site
+git clone -b examples https://github.com/8eecf0d2/jagwah.git
+cd jagwah/demo-site
 ```
 
 Install dependencies
