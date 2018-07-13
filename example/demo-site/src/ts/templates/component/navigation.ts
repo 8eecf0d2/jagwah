@@ -11,7 +11,7 @@ export class NavigationTemplate {
 		private jagwah: Jagwah
 	) {}
 
-	public render(renderer: Jagwah.template.render) {
+	public render(renderer: Jagwah.Template.render) {
 		return renderer`
 			<div class="col col-12">
 				<nav class="clearfix md-col-10 lg-col-8 mx-auto p2">
@@ -23,14 +23,14 @@ export class NavigationTemplate {
 	}
 
 	private leftNav() {
-		return Jagwah.html`
+		return Jagwah.wire()`
 			<div class="col col-left">
-				<a href="/" class="btn btn-bold">hyperbolé</a>
+				<a href="/" class="btn btn-bold">Jagwah</a>
 			</div>
 		`
 	}
 	private rightNav() {
-		return Jagwah.html`
+		return Jagwah.wire()`
 			<div class="col col-right">
 				<a href="https://github.com/8eecf0d2/jagwah/wiki" target="_blank" class="btn">Docs</a>
 				<a href="https://github.com/8eecf0d2/jagwah" target="_blank" class="btn">Github</a>

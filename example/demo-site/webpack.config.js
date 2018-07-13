@@ -13,7 +13,6 @@ module.exports = {
 	plugins: [
 		new webpack.DefinePlugin({
 			ENV: JSON.stringify(process.env.NODE_ENV),
-			APIURL: JSON.stringify(process.env.NODE_ENV === 'development' ? 'http://dev.api.hyper.ng' : 'https://api.hyper.ng'),
 		}),
 		new BundleAnalyzerPlugin({
 			analyzerMode: 'static',

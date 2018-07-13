@@ -1,7 +1,7 @@
 {
-  "name": "hyperbole-demo-site",
+  "name": "jagwah-demo-site",
   "version": "0.0.0",
-  "description": "Demo site using hyperbolé",
+  "description": "Demo site using jagwah",
   "main": "dist/bundle.js",
   "scripts": {
     "watch": "NODE_ENV=development MODE=development webpack --watch --info-verbosity=verbose",

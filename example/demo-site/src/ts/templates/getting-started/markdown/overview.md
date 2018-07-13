@@ -13,10 +13,15 @@ yarn add jagwah
 Import and start using
 
 ```ts
-import { jagwah } from 'jagwah';
+import { Jagwah } from 'jagwah';
 ​
-jagwah.provider(...);
-jagwah.template(...);
+const jagwah = new Jagwah({
+  providers: [...],
+  templates: [...],
+  routes: [...],
+})
+
 ...
+
 jagwah.start();
 ```

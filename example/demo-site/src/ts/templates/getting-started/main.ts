@@ -17,14 +17,14 @@ export class GettingStartedTemplate {
 		private jagwah: Jagwah
 	) {}
 
-	public render(renderer: Jagwah.template.render) {
+	public render(renderer: Jagwah.Template.render) {
 		return renderer`
 			<content class="col col-12">
 				<content class="col col-12 p4 hero-shape-3 flex">
 					<div class="col col-12 mx-auto flex flex-center">
 						<div class="col col-12 center fg-steel">
 							<h1 class="mt1">Getting Started</h1>
-							<p>Learn how to use <strong>hyperbolé</strong> and start building brilliant applications.</p>
+							<p>Learn how to use <strong>Jagwah</strong> and start building brilliant applications.</p>
 						</div>
 					</div>
 				</content>
@@ -41,7 +41,7 @@ export class GettingStartedTemplate {
 	}
 
 	public section(content: string) {
-		return Jagwah.html`
+		return Jagwah.wire()`
 			<section class="col col-12">
 				${{ html: content }}
 			</section>

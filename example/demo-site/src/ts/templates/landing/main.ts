@@ -11,14 +11,14 @@ export class LandingTemplate {
 		private jagwah: Jagwah
 	) {}
 
-	public render(renderer: Jagwah.template.render) {
+	public render(renderer: Jagwah.Template.render) {
 		return renderer`
 			<content class="col col-12">
 				<content class="col col-12 p4 hero-shape-0 flex">
 					<div class="col col-12 mx-auto flex flex-center">
 						<div class="col col-12 center fg-steel">
 							<h1 class="mt1">Rapid Web Development</h1>
-							<p>Use <strong>hyperbolé</strong> to build fast, reliable and accessible web applications.</p>
+							<p>Use <strong>Jagwah</strong> to build fast, reliable and accessible web applications.</p>
 						</div>
 					</div>
 				</content>
@@ -31,7 +31,7 @@ export class LandingTemplate {
 						<div class="col md-col-8 p3 flex flex-center">
 							<div class="mx-auto fg-steel">
 								<h2>Iterate Quickly</h2>
-								<p>Developing with <strong>hyperbolé</strong> is super time efficient, instead of configuring builds or refactoring structure you can just write features and ship products.</p>
+								<p>Developing with <strong>Jagwah</strong> is super time efficient, instead of configuring builds or refactoring structure you can just write features and ship products.</p>
 							</div>
 						</div>
 					</div>
@@ -59,7 +59,7 @@ export class LandingTemplate {
 						<div class="col md-col-6 p3 flex flex-center">
 							<div class="mx-auto fg-steel">
 								<h2>Easy to Learn</h2>
-								<p>You can use whatever Javascript stuff you like with <strong>hyperbolé</strong>, whether it's <code>classes</code> <code>functions</code> or just plain old <code>objects</code> - you're able to use whatever works best for you.</p>
+								<p>You can use whatever Javascript stuff you like with <strong>Jagwah</strong>, whether it's <code>classes</code> <code>functions</code> or just plain old <code>objects</code> - you're able to use whatever works best for you.</p>
 							</div>
 						</div>
 					</div>
@@ -69,7 +69,7 @@ export class LandingTemplate {
 					<div class="md-col-10 lg-col-8 mx-auto">
 						<div class="col col-12 p3">
 							<div class="mx-auto fg-undercoat mt2">
-								<p>The goal of <strong>hyperbolé</strong> is to create a rapid, modern and enjoyable web development experience.<br>This isn't Angular with philosophical questions about the creation of life, nor React and friends with their impetus of being <span class="italic">reactful</span>, it's just a web framework that works.</p>
+								<p>The goal of <strong>Jagwah</strong> is to create a rapid, modern and enjoyable web development experience.<br>This isn't Angular with philosophical questions about the creation of life, nor React and friends with their impetus of being <span class="italic">reactful</span>, it's just a web framework that works.</p>
 								<p>If you're curious about the name - scroll back up the top and read this page again.</p>
 								<p></p>
 							</div>
