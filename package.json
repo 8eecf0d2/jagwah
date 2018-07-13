@@ -9,6 +9,8 @@
   ],
   "scripts": {
     "watch": "tsc --project tsconfig.json --watch",
+    "clean": "rm -r dist test",
+    "prebuild": "yarn clean",
     "build": "tsc --project tsconfig.json",
     "prebuild:test": "yarn build",
     "build:test": "tsc --project tsconfig.test.json",
