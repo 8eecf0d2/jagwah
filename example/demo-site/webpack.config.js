@@ -11,9 +11,6 @@ module.exports = {
 	devtool: 'source-map',
 	mode: process.env.MODE,
 	plugins: [
-		new webpack.DefinePlugin({
-			ENV: JSON.stringify(process.env.NODE_ENV),
-		}),
 		new BundleAnalyzerPlugin({
 			analyzerMode: 'static',
 			openAnalyzer: false,
@@ -58,7 +55,7 @@ module.exports = {
 
 if(process.env.WEBPACK_SERVE) {
 	module.exports.serve = {
-		port: 2080,
+		port: 3000,
 		content: ['./src/html', './src'],
 		add: (app, middleware, options) => {
 			app.use(convert(history({})));
