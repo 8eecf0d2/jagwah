@@ -5,7 +5,7 @@
 [![Bundlephobia minified badge](https://img.shields.io/bundlephobia/min/jagwah.svg)](https://bundlephobia.com/result?p=jagwah@latest)
 [![Bundlephobia minified zipped badge](https://img.shields.io/bundlephobia/minzip/jagwah.svg)](https://bundlephobia.com/result?p=jagwah@latest)
 
-Jagwah (pronounced [/dʒægwæh/](https://itinerarium.github.io/phoneme-synthesis/)) is a tiny web application framework with HyperHTML & Typescript.
+Jagwah (pronounced [/dʒægwæh/](https://itinerarium.github.io/phoneme-synthesis/)) is a tiny web application framework built with [hyperHtml](https://github.com/WebReflection/hyperHtml) & [Typescript](https://github.com/Microsoft/TypeScript).
 
 ### Getting Started
 
