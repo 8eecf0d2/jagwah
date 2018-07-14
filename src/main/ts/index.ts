@@ -31,11 +31,9 @@ export class Jagwah {
 		this.providers['$jagwah'] = this;
 
 		/** initialize providers */
-		if(options.providers) {
-			const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...options.providers ]
-			for(const provider in providers) {
-				this.Provider(providers[provider]);
-			}
+		const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...(options.providers || []) ]
+		for(const provider in providers) {
+			this.Provider(providers[provider]);
 		}
 
 		/** initialize routes */
@@ -81,14 +79,14 @@ export class Jagwah {
 		const dependencies = this.Dependencies(template.$inject);
 		const _template: Jagwah.Template.copy = {
 			$selector: template.$selector,
-			$template: template.$template,
+			$template: template.$template || 'anonymous',
 			$element: hyperhtml.bind(document.querySelectorAll(template.$selector)[0]),
 			instance: new template(...dependencies),
 		}
 
 		/** add / replace template in active templates (based on selector) */
 		this.templates[_template.$selector] = _template;
-		this.radio.emit(`jagwah:template:register`, template.$template);
+		this.radio.emit(`jagwah:template:register`, template.$template || 'anonymous');
 	}
 
 	/**
@@ -227,7 +225,7 @@ export module Jagwah {
 		}
 		export interface copy {
 			$selector: string;
-			$template: string;
+			$template?: string;
 			$element: Jagwah.Template.element;
 			instance: any;
 		}
