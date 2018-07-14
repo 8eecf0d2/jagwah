@@ -140,6 +140,7 @@ export class Jagwah {
 					await this.Middleware(middleware);
 				}
 			}
+
 			this.radio.emit(`jagwah:router:update:after`, context);
 		});
 	}
