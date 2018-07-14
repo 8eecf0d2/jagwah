@@ -61,7 +61,7 @@ export class Jagwah {
 		}
 
 		this.initialized = true;
-		this.router.navigate(window.location.pathname);
+		this.router.start();
 
 		if(options.after) {
 			await Promise.all(options.after.map(AfterHandler => {
@@ -140,6 +140,7 @@ export class Jagwah {
 					await this.Middleware(middleware);
 				}
 			}
+
 			this.radio.emit(`jagwah:router:update:after`, context);
 		});
 	}
@@ -272,11 +273,4 @@ export module Jagwah {
 		$inject?: Jagwah.Provider.name[];
 	}
 
-	export const ObjectToArray = <T = any>(obj: {[key: string]: T}): T[] => {
-		const array = [];
-		for(const key in obj) {
-			array.push(obj[key]);
-		}
-		return array;
-	}
 }
