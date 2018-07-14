@@ -45,7 +45,7 @@ Below is a really simple example of jagwah, it uses a single Template without Pr
 
 `main.ts`
 ```ts
-import { Jagwah, Selector, Template } from 'jagwah';
+import { Jagwah, Selector } from 'jagwah';
 ​
 const jagwah = new Jagwah();
 ​
