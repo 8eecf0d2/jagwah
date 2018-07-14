@@ -13,8 +13,8 @@ export class BeforeStart {
 }
 
 const jagwah = new Jagwah({
-	routes: Jagwah.ObjectToArray(routes),
-	templates: Jagwah.ObjectToArray(templates),
+	routes: Object.values(routes),
+	templates: Object.values(templates),
 });
 
 jagwah.start({
