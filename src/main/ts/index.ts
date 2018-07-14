@@ -273,11 +273,4 @@ export module Jagwah {
 		$inject?: Jagwah.Provider.name[];
 	}
 
-	export const ObjectToArray = <T = any>(obj: {[key: string]: T}): T[] => {
-		const array = [];
-		for(const key in obj) {
-			array.push(obj[key]);
-		}
-		return array;
-	}
 }
