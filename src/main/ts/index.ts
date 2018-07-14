@@ -31,11 +31,9 @@ export class Jagwah {
 		this.providers['$jagwah'] = this;
 
 		/** initialize providers */
-		if(options.providers) {
-			const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...options.providers ]
-			for(const provider in providers) {
-				this.Provider(providers[provider]);
-			}
+		const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...(options.providers || []) ]
+		for(const provider in providers) {
+			this.Provider(providers[provider]);
 		}
 
 		/** initialize routes */
