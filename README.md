@@ -49,7 +49,6 @@ import { Jagwah, Selector, Template } from 'jagwah';
 ​
 const jagwah = new Jagwah();
 ​
-@Template('hello-world')
 @Selector('#hello-world')
 class HelloWorldTemplate {
   constructor() {}
@@ -62,7 +61,6 @@ class HelloWorldTemplate {
 ​
 jagwah.Template(HelloWorldTemplate);
 ​
-jagwah.start();
 jagwah.update();
 ```
 
@@ -73,7 +71,6 @@ import { Jagwah } from 'jagwah';
 const jagwah = new Jagwah();
 ​
 function HelloWorldTemplate() {}
-HelloWorldTemplate.$template = 'hello-world';
 HelloWorldTemplate.$selector = '#hello-world';
 HelloWorldTemplate.prototype.render(render: Jagwah.Template.render) {
   return render`
@@ -83,7 +80,6 @@ HelloWorldTemplate.prototype.render(render: Jagwah.Template.render) {
 ​
 jagwah.Template(HelloWorldTemplate);
 ​
-jagwah.start();
 jagwah.update();
 ```
 
