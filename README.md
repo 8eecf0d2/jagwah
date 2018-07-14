@@ -66,6 +66,27 @@ jagwah.start();
 jagwah.update();
 ```
 
+`main.js` (javascript alternative)
+```ts
+import { Jagwah } from 'jagwah';
+​
+const jagwah = new Jagwah();
+​
+function HelloWorldTemplate() {}
+HelloWorldTemplate.$template = 'hello-world';
+HelloWorldTemplate.$selector = '#hello-world';
+HelloWorldTemplate.prototype.render(render: Jagwah.Template.render) {
+  return render`
+    <h1>Hello World</h1>
+  `;
+}
+​
+jagwah.Template(HelloWorldTemplate);
+​
+jagwah.start();
+jagwah.update();
+```
+
 `index.html`
 ```html
 <body>
