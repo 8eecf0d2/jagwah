@@ -9,11 +9,7 @@
 		"declaration": true,
 		"declarationDir": "./dist/test",
 		"outDir": "./dist/test",
-		"lib": [
-			"es6",
-			"es7",
-			"dom"
-		]
+		"lib": [ "ES2017", "dom" ]
 	},
 	"include": [
 		"src/main/**/*.ts"
