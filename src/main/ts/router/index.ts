@@ -17,6 +17,10 @@ export class Router {
 		window.addEventListener('pushstate', () => this.handleEvent(), false);
 	}
 
+	public start() {
+		this.handleEvent();
+	}
+
 	public register(pathStr: string, pathHandler: Router.Path.handler) {
 		this.paths[pathStr] = {
 			pattern: new urlPattern(pathStr),

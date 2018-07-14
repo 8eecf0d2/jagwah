@@ -61,7 +61,7 @@ export class Jagwah {
 		}
 
 		this.initialized = true;
-		this.router.navigate(window.location.pathname);
+		this.router.start();
 
 		if(options.after) {
 			await Promise.all(options.after.map(AfterHandler => {
