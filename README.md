@@ -21,8 +21,8 @@ Import and start using
 import { Jagwah } from 'jagwah';
 ​
 const jagwah = new Jagwah({
-  providers: { ... },
-  templates: { ... }
+  providers: [ ... ],
+  templates: [ ... ]
 });
 ...
 jagwah.start();
