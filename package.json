@@ -16,11 +16,13 @@
     "build:test": "tsc --project tsconfig.test.json",
     "pretest": "yarn build:test",
     "posttest": "yarn build",
-    "test": "node dist/test/main/ts/index.spec.js"
+    "test": "node dist/test/test-suite/ts/puppeteer.js"
   },
   "author": "8eecf0d2",
   "license": "ISC",
   "devDependencies": {
+    "@types/puppeteer": "^1.5.0",
+    "puppeteer": "^1.6.0",
     "should": "^13.2.1",
     "typescript": "^2.9.0-rc"
   },

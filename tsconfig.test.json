@@ -12,6 +12,6 @@
 		"lib": [ "ES2017", "dom" ]
 	},
 	"include": [
-		"src/main/**/*.ts"
+		"src/**/*.ts"
 	]
 }
