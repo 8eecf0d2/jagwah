@@ -141,6 +141,7 @@ export class Jagwah {
 
 			this.radio.emit(`jagwah:router:update:after`, context);
 		});
+		this.radio.emit(`jagwah:route:register`, route.$route);
 	}
 
 	/**
