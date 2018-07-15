@@ -20,7 +20,13 @@ export class Jagwah {
 	private providers: Jagwah.Provider.set = {};
 	private templates: Jagwah.Template.set = {};
 
-	constructor(options: Jagwah.options = {}) {
+	public state: Jagwah.state = {};
+	private actions: Jagwah.Action.set = {};
+	private reducers: Jagwah.Reducer.set = {};
+
+	constructor(
+		options: Jagwah.options = {},
+	) {
 		/** register constants */
 		this.constants = options.constants;
 
@@ -73,7 +79,39 @@ export class Jagwah {
 	}
 
 	/**
-	 * Initialize a Template for rendering.
+	 * Register an State (redux-like).
+	 */
+	public State(state: Jagwah.state) {
+		this.state = state;
+	}
+
+	/**
+	 * Register an Action (redux-like).
+	 */
+	public Action(action: Jagwah.Action) {
+		this.actions[action.$name] = action.$handler;
+	}
+
+	/**
+	 * Register a Reducer (redux-like).
+	 */
+	public Reducer(reducer: Jagwah.Reducer) {
+		this.reducers[reducer.$name] = reducer.$handler;
+	}
+
+	/**
+	 * Register a Reducer (redux-like).
+	 */
+	public Dispatch(name: Jagwah.Redux.name, data: Jagwah.Action.input) {
+		this.state = this.reducers[name](
+			this.state,
+			this.actions[name](data)
+		);
+		this.update();
+	}
+
+	/**
+	 * Register a Template for rendering.
 	 */
 	public Template(template: Jagwah.Template) {
 		const dependencies = this.Dependencies(template.$inject);
@@ -90,7 +128,7 @@ export class Jagwah {
 	}
 
 	/**
-	 * Initialize a Provider for state management.
+	 * Register a Provider for state management.
 	 */
 	public Provider(provider: Jagwah.Provider) {
 		const dependencies = this.Dependencies(provider.$inject);
@@ -99,7 +137,7 @@ export class Jagwah {
 	}
 
 	/**
-	 * Initialize a Route for state / templates changes.
+	 * Register a Route for state / templates changes.
 	 */
 	public Route(route: Jagwah.Route) {
 		const dependencies = this.Dependencies(route.$inject);
@@ -195,6 +233,39 @@ export module Jagwah {
 			before?: any[];
 			after?: any[];
 		}
+	}
+
+	export type state = { [key: string]: any };
+
+	/** Redux */
+	export module Redux {
+		export type name = string;
+	}
+
+	/** Action */
+	export module Action {
+		export type input = any;
+		export type output = any;
+		export type handler = (data: Jagwah.Action.input) => Jagwah.Action.output;
+		export interface set {
+			[ActionName: string]: Jagwah.Action.handler;
+		}
+	}
+	export interface Action {
+		$name?: Jagwah.Redux.name;
+		$handler?: Jagwah.Action.handler;
+	}
+
+	/** Reducer */
+	export module Reducer {
+		export type handler = (state: Jagwah.state, data: Jagwah.Action.output) => Jagwah.state;
+		export interface set {
+			[ReducerName: string]: Jagwah.Reducer.handler;
+		}
+	}
+	export interface Reducer {
+		$name?: Jagwah.Redux.name;
+		$handler?: Jagwah.Reducer.handler;
 	}
 
 	/** Provider */
