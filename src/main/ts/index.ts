@@ -12,7 +12,6 @@ export * from './helpers';
 export * from './decorators';
 
 export class Jagwah {
-	public initialized: boolean = false;
 	public radio: Radio = new Radio();
 	public router: Router = new Router();
 
@@ -60,7 +59,6 @@ export class Jagwah {
 			}));
 		}
 
-		this.initialized = true;
 		this.router.start();
 
 		if(options.after) {
