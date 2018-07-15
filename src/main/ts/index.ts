@@ -23,26 +23,26 @@ export class Jagwah {
 	constructor(
 		options: Jagwah.options = {},
 	) {
-		/** initialize constants */
+		/** register constants */
 		this.constants = options.constants;
 
-		/** initialize "this" as provider $Jagwah */
+		/** register "this" as provider $jagwah */
 		this.providers['$jagwah'] = this;
 
-		/** initialize providers */
+		/** register providers */
 		const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...(options.providers || []) ]
 		for(const provider in providers) {
 			this.Provider(providers[provider]);
 		}
 
-		/** initialize routes */
+		/** register routes */
 		if(options.routes) {
 			for(const route in options.routes) {
 				this.Route(options.routes[route]);
 			}
 		}
 
-		/** initialize templates */
+		/** register templates */
 		if(options.templates) {
 			for(const template in options.templates) {
 				this.Template(options.templates[template]);
