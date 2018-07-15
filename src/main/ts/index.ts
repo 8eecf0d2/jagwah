@@ -122,10 +122,9 @@ export class Jagwah {
 				for(const template of route.$templates) {
 					this.Template(template);
 				}
+				/** update templates in use */
+				this.update();
 			}
-
-			/** update templates in use */
-			this.update();
 
 			/** run route after() method */
 			if(routeInstance.after) {
