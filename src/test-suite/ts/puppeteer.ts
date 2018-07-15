@@ -15,14 +15,9 @@ export class Browser {
 		});
 		const page = await this.browser.newPage();
 		const filepath = path.resolve(__dirname, '../../main/ts/index.spec.js');
-		console.log(filepath)
-		page.setContent('<html></html>');
-		page.addScriptTag({
-			path: filepath
-		});
-	}
-
-	public async goto() {
+		page.setContent('');
+		page.addScriptTag({ path: filepath });
+		await this.browser.close();
 	}
 }
 
