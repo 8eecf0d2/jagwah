@@ -2,7 +2,8 @@
  * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import * as hyperhtml from 'hyperhtml/cjs';
+//@ts-ignore
+import * as hyperhtml from 'hypermorphic';
 
 import { Radio } from './radio';
 import { Router } from './router';

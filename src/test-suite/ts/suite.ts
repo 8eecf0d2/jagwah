@@ -2,6 +2,13 @@
  * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
+import { JSDOM } from 'jsdom';
+
+//@ts-ignore
+global.window = new JSDOM('').window;
+//@ts-ignore
+global.document = window.document;
+
 export class TestSuite {
 	private tests: TestSuite.Test[] = [];
 	private failures: TestSuite.Failure[];

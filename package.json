@@ -21,11 +21,13 @@
   "author": "8eecf0d2",
   "license": "ISC",
   "devDependencies": {
+    "@types/jsdom": "^11.0.6",
+    "jsdom": "^11.11.0",
     "should": "^13.2.1",
     "typescript": "^2.9.0-rc"
   },
   "dependencies": {
-    "hyperhtml": "^2.11.2",
+    "hypermorphic": "^0.6.3",
     "url-pattern": "^1.0.3"
   },
   "repository": {
