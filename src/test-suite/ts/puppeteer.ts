@@ -10,9 +10,7 @@ export class Browser {
 	constructor() {}
 
 	public async start() {
-		this.browser = await puppeteer.launch({
-			headless: false
-		});
+		this.browser = await puppeteer.launch();
 		const page = await this.browser.newPage();
 		const filepath = path.resolve(__dirname, '../../main/ts/index.spec.js');
 		page.setContent('');
