@@ -55,21 +55,23 @@ export class Jagwah {
 	/** start the Jagwah application */
 	public async start(options: Jagwah.start.options = {}) {
 		if(options.before) {
-			await Promise.all(options.before.map(BeforeHandler => {
-				const dependencies = this.Dependencies(BeforeHandler.$inject);
-				return new BeforeHandler(...dependencies).task();
-			}));
+			await this.processStartHandler(options.before);
 		}
 
 		this.router.start();
 
 		if(options.after) {
-			await Promise.all(options.after.map(AfterHandler => {
-				const dependencies = this.Dependencies(AfterHandler.$inject);
-				return new AfterHandler(...dependencies).task();
-			}));
+			await this.processStartHandler(options.after);
 		}
+
 		this.radio.emit(`jagwah:start`);
+	}
+
+	private async processStartHandler(handlers: any[]) {
+		return Promise.all(handlers.map(handler => {
+			const dependencies = this.Dependencies(handler.$inject);
+			return new handler(...dependencies).task();
+		}));
 	}
 
 	/**
