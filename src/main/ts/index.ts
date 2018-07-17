@@ -158,9 +158,11 @@ export class Jagwah {
 	 */
 	private Dependencies(names: Jagwah.Provider.name[] = []): Jagwah.Provider.instance[] {
 		const dependencies = [];
-		for(const injectName of names) {
-			if(this.providers[injectName]) {
-				dependencies.push(this.providers[injectName]);
+		for(const name of names) {
+			if(this.providers[name]) {
+				dependencies.push(this.providers[name]);
+			} else {
+				throw new Error(`Dependency "${name}" could not be found`)
 			}
 		}
 		return dependencies;
