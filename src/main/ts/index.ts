@@ -20,9 +20,7 @@ export class Jagwah {
 	private providers: Jagwah.Provider.set = {};
 	private templates: Jagwah.Template.set = {};
 
-	constructor(
-		options: Jagwah.options = {},
-	) {
+	constructor(options: Jagwah.options = {}) {
 		/** register constants */
 		this.constants = options.constants;
 
