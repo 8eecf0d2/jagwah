@@ -109,9 +109,7 @@ export class Jagwah {
 
 			/** run route $before middleware */
 			if(route.$before) {
-				for(const middleware of route.$before) {
-					await this.Middleware(middleware);
-				}
+				await this.Middleware(route.$before);
 			}
 
 			/** run route before() method */
@@ -135,9 +133,7 @@ export class Jagwah {
 
 			/** run route $after middleware */
 			if(route.$after) {
-				for(const middleware of route.$after) {
-					await this.Middleware(middleware);
-				}
+				await this.Middleware(route.$after);
 			}
 
 			this.radio.emit(`jagwah:router:update:after`, context);
@@ -148,9 +144,11 @@ export class Jagwah {
 	/**
 	 * Handle middleware for route
 	 */
-	private async Middleware(middleware: Jagwah.Middleware.instance) {
-		const middlewareDependencies = this.Dependencies(middleware.$inject);
-		return middleware.task(...middlewareDependencies);
+	private async Middleware(middlewares: Jagwah.Middleware.instance[]) {
+		for(const middleware of middlewares) {
+			const depdendencies = this.Dependencies(middleware.$inject);
+			return middleware.task(...depdendencies);
+		}
 	}
 
 	/**
