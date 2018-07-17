@@ -4,7 +4,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/8eecf0d2/jagwah.svg)](https://greenkeeper.io/)
 [![Bundlephobia minified badge](https://img.shields.io/bundlephobia/min/jagwah.svg)](https://bundlephobia.com/result?p=jagwah@latest)
 [![Bundlephobia minified zipped badge](https://img.shields.io/bundlephobia/minzip/jagwah.svg)](https://bundlephobia.com/result?p=jagwah@latest)
-[![Codeclimate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/8eecf0d2/jagwah.svg)][https://codeclimate.com/github/8eecf0d2/jagwah]
+[![Codeclimate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/8eecf0d2/jagwah.svg)](https://codeclimate.com/github/8eecf0d2/jagwah)
 
 Jagwah (pronounced [/dʒægwæh/](https://itinerarium.github.io/phoneme-synthesis/)) is a tiny web application framework built with [hyperHtml](https://github.com/WebReflection/hyperHtml) & [Typescript](https://github.com/Microsoft/TypeScript).
 
