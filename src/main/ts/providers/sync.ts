@@ -6,7 +6,7 @@ import { Jagwah, Helpers } from '../';
 
 export class SyncProvider {
 	static $provider = '$sync';
-	static $inject = ['$Jagwah'];
+	static $inject = ['$jagwah'];
 	constructor(
 		private $jagwah: Jagwah,
 	) {}

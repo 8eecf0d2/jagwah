@@ -28,6 +28,8 @@ export class Jagwah {
 
 		/** register "this" as provider $jagwah */
 		this.providers['$jagwah'] = this;
+		this.providers['$router'] = this.router;
+		this.providers['$radio'] = this.radio;
 
 		/** register providers */
 		const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...(options.providers || []) ]
@@ -156,9 +158,11 @@ export class Jagwah {
 	 */
 	private Dependencies(names: Jagwah.Provider.name[] = []): Jagwah.Provider.instance[] {
 		const dependencies = [];
-		for(const injectName of names) {
-			if(this.providers[injectName]) {
-				dependencies.push(this.providers[injectName]);
+		for(const name of names) {
+			if(this.providers[name]) {
+				dependencies.push(this.providers[name]);
+			} else {
+				throw new Error(`Dependency "${name}" could not be found`)
 			}
 		}
 		return dependencies;
