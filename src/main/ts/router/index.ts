@@ -2,7 +2,8 @@
  * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import * as urlPattern from 'url-pattern';
+//@ts-ignore
+import { named as pattern } from 'named-regexp';
 
 import { handleStateEvent } from './state-event-handler';
 
@@ -23,7 +24,7 @@ export class Router {
 
 	public register(pathStr: string, pathHandler: Router.Path.handler) {
 		this.paths[pathStr] = {
-			pattern: new urlPattern(pathStr),
+			pattern: pattern(pathStr),
 			handler: pathHandler,
 		};
 	}
@@ -44,15 +45,24 @@ export class Router {
 	private async handleEvent() {
 		for(const pathStr in this.paths) {
 			const path = this.paths[pathStr];
-			const match = path.pattern.match(location.pathname);
+			//@ts-ignore
+			const match = path.pattern.exec(location.pathname);
 			if(match) {
-				this.context = {
-					path: location.pathname,
-					params: match,
-				}
+				this.context = this.parseContext(location.pathname, match.captures)
 				return path.handler(this.context);
 			}
 		}
+	}
+
+	private parseContext(path: string, captures: { [name: string]: string[] }): Router.Context {
+		const context: Router.Context = {
+			path: path,
+			params: {}
+		}
+		for(const group in captures) {
+			context.params[group] = captures[group][0];
+		}
+		return context
 	}
 
 }
@@ -65,7 +75,7 @@ export module Router {
 		}
 	}
 	export interface Path {
-		pattern: urlPattern;
+		pattern: NamedRegExp;
 		handler: Router.Path.handler;
 	}
 
@@ -75,4 +85,20 @@ export module Router {
 			[name: string]: string;
 		}
 	}
+}
+
+
+export module NamedRegExp {
+	export type exec = (str: string) => NamedRegExp.exec.result;
+	export module exec {
+		export interface result extends RegExpExecArray {
+			captures: {
+				[name: string]: string[];
+			};
+		}
+	}
+}
+
+export interface NamedRegExp extends RegExp {
+	exec: NamedRegExp.exec;
 }
