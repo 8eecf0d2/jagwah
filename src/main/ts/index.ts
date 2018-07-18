@@ -30,7 +30,7 @@ export class Jagwah {
 		this.providers['$radio'] = this.radio;
 
 		/** register providers */
-		const providers = [ Providers.SyncProvider, Providers.HttpProvider, ...(options.providers || []) ]
+		const providers = [ Providers.SyncProvider, ...(options.providers || []) ]
 		for(const provider in providers) {
 			this.Provider(providers[provider]);
 		}
@@ -207,7 +207,6 @@ export module Jagwah {
 
 		/** Built-in Providers*/
 		export type SyncProvider = Providers.SyncProvider;
-		export type HttpProvider = Providers.HttpProvider;
 	}
 	export interface Provider {
 		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Provider.instance;
