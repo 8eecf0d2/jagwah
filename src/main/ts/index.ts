@@ -147,7 +147,7 @@ export class Jagwah {
 	private async Middleware(middlewares: Jagwah.Middleware.instance[]) {
 		for(const middleware of middlewares) {
 			const depdendencies = this.Dependencies(middleware.$inject);
-			return middleware.task(...depdendencies);
+			await middleware.task(...depdendencies);
 		}
 	}
 
