@@ -89,14 +89,14 @@ export class Jagwah {
 	 * Register an Action (redux-like).
 	 */
 	public Action(action: Jagwah.Action) {
-		this.actions[action.$name] = action.$handler;
+		this.actions[action.name] = action.handler;
 	}
 
 	/**
 	 * Register a Reducer (redux-like).
 	 */
 	public Reducer(reducer: Jagwah.Reducer) {
-		this.reducers[reducer.$name] = reducer.$handler;
+		this.reducers[reducer.name] = reducer.handler;
 	}
 
 	/**
@@ -252,8 +252,8 @@ export module Jagwah {
 		}
 	}
 	export interface Action {
-		$name?: Jagwah.Redux.name;
-		$handler?: Jagwah.Action.handler;
+		name?: Jagwah.Redux.name;
+		handler?: Jagwah.Action.handler;
 	}
 
 	/** Reducer */
@@ -264,8 +264,8 @@ export module Jagwah {
 		}
 	}
 	export interface Reducer {
-		$name?: Jagwah.Redux.name;
-		$handler?: Jagwah.Reducer.handler;
+		name?: Jagwah.Redux.name;
+		handler?: Jagwah.Reducer.handler;
 	}
 
 	/** Provider */
@@ -305,10 +305,11 @@ export module Jagwah {
 		}
 	}
 	export interface Template {
-		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Template.instance;
-		$template?: Jagwah.Template.name;
-		$selector?: Jagwah.Template.selector;
-		$inject?: Jagwah.Provider.name[];
+		selector: Jagwah.Template.selector;
+		render: {
+			main: (state: Jagwah.state, bind: hyperhtml.BoundTemplateFunction<Element>) => HTMLElement|Promise<HTMLElement>;
+			[name: string]: (...args: any[]) => HTMLElement|Promise<HTMLElement>;
+		}
 	}
 
 	/** Route */
