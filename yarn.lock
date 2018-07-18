@@ -12,6 +12,10 @@ lightercollective@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/lightercollective/-/lightercollective-0.1.0.tgz#70df102c530dcb8d0ccabfe6175a8d00d5f61300"
 
+named-regexp@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/named-regexp/-/named-regexp-0.1.1.tgz#cd9c5383245fa5cbc712a73d669b1e4e2aef590d"
+
 should-equal@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/should-equal/-/should-equal-2.0.0.tgz#6072cf83047360867e68e98b09d71143d04ee0c3"
@@ -53,7 +57,3 @@ should@^13.2.1:
 typescript@^2.9.0-rc:
   version "2.9.2"
   resolved "https://registry.npmjs.org/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
-
-url-pattern@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/url-pattern/-/url-pattern-1.0.3.tgz#0409292471b24f23c50d65a47931793d2b5acfc1"
