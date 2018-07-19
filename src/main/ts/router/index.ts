@@ -29,17 +29,22 @@ export class Router {
 		};
 	}
 
-	public navigate(path: string) {
+	public navigate(path: string): { navigate: boolean } {
 		if(path === location.pathname) {
-			return this.handleEvent();
+			this.handleEvent();
+		} else {
+			const html = document.documentElement;
+			const anchor = document.createElement('a');
+			anchor.href = path;
+			/** important that this uses "function()" syntax to correctly scope "this" */
+			anchor.onclick = function() { this.parentNode.removeChild(this) };
+			html.insertBefore(anchor, html.firstChild);
+			anchor.click();
 		}
-		const html = document.documentElement;
-		const anchor = document.createElement('a');
-		anchor.href = path;
-		/** important that this uses "function()" syntax to correctly scope "this" */
-		anchor.onclick = function() { this.parentNode.removeChild(this) };
-		html.insertBefore(anchor, html.firstChild);
-		anchor.click();
+
+		return {
+			navigate: true
+		}
 	}
 
 	private async handleEvent() {

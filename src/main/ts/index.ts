@@ -109,12 +109,18 @@ export class Jagwah {
 
 			/** run route $before middleware */
 			if(route.$before) {
-				await this.Middleware(route.$before);
+				const result = await this.Middleware(route.$before);
+				if(result && result._stop === true){
+					return
+				}
 			}
 
 			/** run route before() method */
 			if(routeInstance.before) {
-				await routeInstance.before(context)
+				const result = await routeInstance.before(context);
+				if(result && result._stop === true){
+					return
+				}
 			}
 
 			/** set route templates */
@@ -128,12 +134,18 @@ export class Jagwah {
 
 			/** run route after() method */
 			if(routeInstance.after) {
-				await routeInstance.after(context)
+				const result = await routeInstance.after(context);
+				if(result && result._stop === true){
+					return
+				}
 			}
 
 			/** run route $after middleware */
 			if(route.$after) {
-				await this.Middleware(route.$after);
+				const result = await this.Middleware(route.$after);
+				if(result && result._stop === true){
+					return
+				}
 			}
 
 			this.radio.emit(`jagwah:router:update:after`, context);
@@ -147,7 +159,10 @@ export class Jagwah {
 	private async Middleware(middlewares: Jagwah.Middleware.instance[]) {
 		for(const middleware of middlewares) {
 			const depdendencies = this.Dependencies(middleware.$inject);
-			await middleware.task(...depdendencies);
+			const result = await middleware.task(...depdendencies);
+			if(result && (result.navigate === true || result._stop === true)) {
+				return { _stop: true }
+			}
 		}
 	}
 
@@ -245,8 +260,8 @@ export module Jagwah {
 		export type path = string;
 		export type middleware = hyperhtml.WiredTemplateFunction;
 		export interface instance {
-			before?: (context: Router.Context) => void;
-			after?: (context: Router.Context) => void;
+			before?: (context: Router.Context) => any;
+			after?: (context: Router.Context) => any;
 		}
 	}
 	export interface Route {
@@ -261,7 +276,7 @@ export module Jagwah {
 	/** Middleware */
 	export module Middleware {
 		export interface instance {
-			task: (...dependencies: Jagwah.Provider.instance[]) => void;
+			task: (...dependencies: Jagwah.Provider.instance[]) => any;
 			/** todo: not sure how this is supposed to work lol */
 			$inject?: Jagwah.Provider.name[];
 		}
