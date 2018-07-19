@@ -18,11 +18,11 @@ export class Router {
 		window.addEventListener('pushstate', () => this.handleEvent(), false);
 	}
 
-	public start() {
+	public start(): void {
 		this.handleEvent();
 	}
 
-	public register(pathStr: string, pathHandler: Router.Path.handler) {
+	public register(pathStr: string, pathHandler: Router.Path.handler): void {
 		this.paths[pathStr] = {
 			pattern: pattern(pathStr),
 			handler: pathHandler,
@@ -47,7 +47,7 @@ export class Router {
 		}
 	}
 
-	private async handleEvent() {
+	private async handleEvent(): Promise<void> {
 		for(const pathStr in this.paths) {
 			const path = this.paths[pathStr];
 			//@ts-ignore
