@@ -18,31 +18,36 @@ export class Router {
 		window.addEventListener('pushstate', () => this.handleEvent(), false);
 	}
 
-	public start() {
+	public start(): void {
 		this.handleEvent();
 	}
 
-	public register(pathStr: string, pathHandler: Router.Path.handler) {
+	public register(pathStr: string, pathHandler: Router.Path.handler): void {
 		this.paths[pathStr] = {
 			pattern: pattern(pathStr),
 			handler: pathHandler,
 		};
 	}
 
-	public navigate(path: string) {
+	public navigate(path: string): { navigate: boolean } {
 		if(path === location.pathname) {
-			return this.handleEvent();
+			this.handleEvent();
+		} else {
+			const html = document.documentElement;
+			const anchor = document.createElement('a');
+			anchor.href = path;
+			/** important that this uses "function()" syntax to correctly scope "this" */
+			anchor.onclick = function() { this.parentNode.removeChild(this) };
+			html.insertBefore(anchor, html.firstChild);
+			anchor.click();
 		}
-		const html = document.documentElement;
-		const anchor = document.createElement('a');
-		anchor.href = path;
-		/** important that this uses "function()" syntax to correctly scope "this" */
-		anchor.onclick = function() { this.parentNode.removeChild(this) };
-		html.insertBefore(anchor, html.firstChild);
-		anchor.click();
+
+		return {
+			navigate: true
+		}
 	}
 
-	private async handleEvent() {
+	private async handleEvent(): Promise<void> {
 		for(const pathStr in this.paths) {
 			const path = this.paths[pathStr];
 			//@ts-ignore
