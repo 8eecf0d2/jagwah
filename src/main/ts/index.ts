@@ -108,23 +108,23 @@ export class Jagwah {
 			this.radio.emit(`jagwah:router:update:before`, context);
 
 			/** run route $before middleware */
-			if(route.$before) {
+			if(route.$before && context.path === this.router.context.path) {
 				const result = await this.Middleware(route.$before);
-				if(result && result._stop === true){
+				if(context.path !== this.router.context.path) {
 					return
 				}
 			}
 
 			/** run route before() method */
-			if(routeInstance.before) {
+			if(routeInstance.before && context.path === this.router.context.path) {
 				const result = await routeInstance.before(context);
-				if(result && result._stop === true){
+				if(context.path !== this.router.context.path) {
 					return
 				}
 			}
 
 			/** set route templates */
-			if(route.$templates) {
+			if(route.$templates && context.path === this.router.context.path) {
 				for(const template of route.$templates) {
 					this.Template(template);
 				}
@@ -133,17 +133,17 @@ export class Jagwah {
 			}
 
 			/** run route after() method */
-			if(routeInstance.after) {
+			if(routeInstance.after && context.path === this.router.context.path) {
 				const result = await routeInstance.after(context);
-				if(result && result._stop === true){
+				if(context.path !== this.router.context.path) {
 					return
 				}
 			}
 
 			/** run route $after middleware */
-			if(route.$after) {
+			if(route.$after && context.path === this.router.context.path) {
 				const result = await this.Middleware(route.$after);
-				if(result && result._stop === true){
+				if(context.path !== this.router.context.path) {
 					return
 				}
 			}
@@ -160,9 +160,6 @@ export class Jagwah {
 		for(const middleware of middlewares) {
 			const depdendencies = this.Dependencies(middleware.$inject);
 			const result = await middleware.task(...depdendencies);
-			if(result && (result.navigate === true || result._stop === true)) {
-				return { _stop: true }
-			}
 		}
 	}
 
