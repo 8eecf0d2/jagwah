@@ -62,11 +62,22 @@ export class Router {
 	private parseContext(path: string, captures: { [name: string]: string[] }): Router.Context {
 		const context: Router.Context = {
 			path: path,
+			query: {},
 			params: {}
 		}
+
+		//@ts-ignore
+		context.query = Array.from<{}>(new URLSearchParams(location.search).keys())
+			.reduce((sum, value: any, index, arr) => {
+				return Object.assign({
+					[value]: new URLSearchParams(location.search).get(value)
+				}, sum);
+			}, {});
+
 		for(const group in captures) {
 			context.params[group] = captures[group][0];
 		}
+
 		return context
 	}
 
@@ -86,6 +97,9 @@ export module Router {
 
 	export interface Context {
 		path: string;
+		query: {
+			[name: string]: string;
+		}
 		params: {
 			[name: string]: string;
 		}
