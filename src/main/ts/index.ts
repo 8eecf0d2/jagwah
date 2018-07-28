@@ -107,6 +107,15 @@ export class Jagwah {
 		this.router.register(route.$route, async (context: Router.Context) => {
 			this.radio.emit(`jagwah:router:update:before`, context);
 
+			/** set route "before" templates */
+			if(route.$beforetemplates && context.path === this.router.context.path) {
+				for(const template of route.$beforetemplates) {
+					this.Template(template);
+				}
+				/** update templates in use */
+				this.update();
+			}
+
 			/** run route $before middleware */
 			if(route.$before && context.path === this.router.context.path) {
 				const result = await this.Middleware(route.$before);
@@ -123,9 +132,9 @@ export class Jagwah {
 				}
 			}
 
-			/** set route templates */
-			if(route.$templates && context.path === this.router.context.path) {
-				for(const template of route.$templates) {
+			/** set route "after" templates */
+			if(route.$aftertemplates && context.path === this.router.context.path) {
+				for(const template of route.$aftertemplates) {
 					this.Template(template);
 				}
 				/** update templates in use */
@@ -264,7 +273,8 @@ export module Jagwah {
 	export interface Route {
 		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Route.instance;
 		$route?: Jagwah.Route.path;
-		$templates?: Jagwah.Template[];
+		$aftertemplates?: Jagwah.Template[];
+		$beforetemplates?: Jagwah.Template[];
 		$inject?: Jagwah.Provider.name[];
 		$before?: Jagwah.Middleware.instance[];
 		$after?: Jagwah.Middleware.instance[];
