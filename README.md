@@ -25,7 +25,7 @@ const jagwah = new Jagwah({
   providers: [ ... ],
   templates: [ ... ]
 });
-...
+
 jagwah.start();
 ```
 
@@ -73,7 +73,7 @@ const jagwah = new Jagwah();
 ​
 function HelloWorldTemplate() {}
 HelloWorldTemplate.$selector = '#hello-world';
-HelloWorldTemplate.prototype.render(render: Jagwah.Template.render) {
+HelloWorldTemplate.prototype.render(render) {
   return render`
     <h1>Hello World</h1>
   `;
