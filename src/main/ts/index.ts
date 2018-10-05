@@ -105,6 +105,11 @@ export class Jagwah {
 		const dependencies = this.Dependencies(route.$inject);
 		const routeInstance = new route(...dependencies);
 		this.router.register(route.$route, async (context: Router.Context) => {
+			context.params = {
+				...context.params,
+				...route.$context,
+			}
+
 			this.radio.emit(`jagwah:router:update:before`, context);
 
 			/** set route "before" templates */
@@ -274,6 +279,7 @@ export namespace Jagwah {
 	export interface Route {
 		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Route.instance;
 		$route?: Jagwah.Route.path;
+		$context?: { [key: string]: any };
 		$aftertemplates?: Jagwah.Template[];
 		$beforetemplates?: Jagwah.Template[];
 		$inject?: Jagwah.Provider.name[];
