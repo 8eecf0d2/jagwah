@@ -4,7 +4,6 @@
 
 import * as hyperhtml from 'hyperhtml/cjs';
 
-import { Radio } from './radio';
 import { Router } from './router';
 import { Providers } from './providers';
 
@@ -12,7 +11,6 @@ export * from './helpers';
 export * from './decorators';
 
 export class Jagwah {
-	public radio: Radio = new Radio();
 	public router: Router = new Router();
 
 	public constants: { [key: string]: any };
@@ -62,7 +60,6 @@ export class Jagwah {
 			await this.processStartHandler(options.after);
 		}
 
-		this.radio.emit(`jagwah:start`);
 	}
 
 	private async processStartHandler(handlers: any[]) {
@@ -89,7 +86,6 @@ export class Jagwah {
 
 		/** add / replace template in active templates (based on selector) */
 		this.templates[_template.$selector] = _template;
-		this.radio.emit(`jagwah:template:register`, template.$template || 'anonymous');
 	}
 
 	/**
@@ -98,7 +94,6 @@ export class Jagwah {
 	public Provider(provider: Jagwah.Provider) {
 		const dependencies = this.Dependencies(provider.$inject);
 		this.providers[provider.$provider] = new provider(...dependencies);
-		this.radio.emit(`jagwah:provider:register`, provider.$provider);
 	}
 
 	/**
@@ -112,8 +107,6 @@ export class Jagwah {
 				...context.params,
 				...route.$context,
 			}
-
-			this.radio.emit(`jagwah:router:update:before`, context);
 
 			/** set route "before" templates */
 			if(route.$beforetemplates && context.path === this.router.context.path) {
@@ -165,9 +158,7 @@ export class Jagwah {
 				}
 			}
 
-			this.radio.emit(`jagwah:router:update:after`, context);
 		});
-		this.radio.emit(`jagwah:route:register`, route.$route);
 	}
 
 	/**
@@ -202,7 +193,6 @@ export class Jagwah {
 		for(const template in this.templates) {
 			this.templates[template].instance.render(this.templates[template].$element);
 		}
-		this.radio.emit(`jagwah:update`);
 	}
 }
 
