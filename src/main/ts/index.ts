@@ -198,7 +198,7 @@ export class Jagwah {
 	}
 }
 
-export module Jagwah {
+export namespace Jagwah {
 	/** hyperHtml */
 	export const wire = hyperhtml.wire;
 	export const bind = hyperhtml.bind;
@@ -211,7 +211,7 @@ export module Jagwah {
 		templates?: Jagwah.Template[];
 	}
 
-	export module start {
+	export namespace start {
 		export interface options {
 			before?: any[];
 			after?: any[];
@@ -219,7 +219,7 @@ export module Jagwah {
 	}
 
 	/** Provider */
-	export module Provider {
+	export namespace Provider {
 		export type name = string;
 		export interface set {
 			[ProviderName: string]: Jagwah.Provider.instance;
@@ -228,6 +228,7 @@ export module Jagwah {
 
 		/** Built-in Providers*/
 		export type SyncProvider = Providers.SyncProvider;
+		export type RouterProvider = Router;
 	}
 	export interface Provider {
 		new(...dependencies: Jagwah.Provider.instance[]): Jagwah.Provider.instance;
@@ -236,7 +237,7 @@ export module Jagwah {
 	}
 
 	/** Template */
-	export module Template {
+	export namespace Template {
 		export type name = string;
 		export type selector = string;
 		export type element = hyperhtml.BoundTemplateFunction<Element>;
@@ -262,7 +263,7 @@ export module Jagwah {
 	}
 
 	/** Route */
-	export module Route {
+	export namespace Route {
 		export type path = string;
 		export type middleware = hyperhtml.WiredTemplateFunction;
 		export interface instance {
@@ -281,7 +282,7 @@ export module Jagwah {
 	}
 
 	/** Middleware */
-	export module Middleware {
+	export namespace Middleware {
 		export interface instance {
 			task: (...dependencies: Jagwah.Provider.instance[]) => any;
 			/** todo: not sure how this is supposed to work lol */

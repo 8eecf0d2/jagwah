@@ -5,7 +5,7 @@
 import { safeGet as _safeGet } from './safe-get';
 import { safeSet as _safeSet } from './safe-set';
 
-export module Helpers {
+export namespace Helpers {
 	/** external */
 	export const external: { [key: string]: any } = {}
 	export const add = (name: string, fn: any) => {

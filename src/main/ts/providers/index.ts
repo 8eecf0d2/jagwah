@@ -4,7 +4,7 @@
 
 import { SyncProvider as _syncProvider } from './sync';
 
-export module Providers {
+export namespace Providers {
 	export type SyncProvider = _syncProvider;
 	export const SyncProvider = _syncProvider;
 }

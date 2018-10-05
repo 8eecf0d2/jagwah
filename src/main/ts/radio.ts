@@ -34,8 +34,8 @@ export class Radio {
 	}
 }
 
-export module Radio {
-	export module Listener {
+export namespace Radio {
+	export namespace Listener {
 		export type name = string;
 		export type callback = (data?: any) => void;
 		export interface set {

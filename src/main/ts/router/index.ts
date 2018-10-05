@@ -83,8 +83,8 @@ export class Router {
 
 }
 
-export module Router {
-	export module Path {
+export namespace Router {
+	export namespace Path {
 		export type handler = (context: Router.Context) => void;
 		export interface set {
 			[Pattern: string]: Router.Path;
@@ -107,9 +107,9 @@ export module Router {
 }
 
 
-export module NamedRegExp {
+export namespace NamedRegExp {
 	export type exec = (str: string) => NamedRegExp.exec.result;
-	export module exec {
+	export namespace exec {
 		export interface result extends RegExpExecArray {
 			captures: {
 				[name: string]: string[];
