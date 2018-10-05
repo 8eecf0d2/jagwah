@@ -76,6 +76,9 @@ export class Jagwah {
 	 * Initialize a Template for rendering.
 	 */
 	public Template(template: Jagwah.Template) {
+		if(!document.querySelectorAll(template.$selector)[0]) {
+			throw new Error(`Error: element "${template.$selector}"" for template "${template.$template}" could not be found.`)
+		}
 		const dependencies = this.Dependencies(template.$inject);
 		const _template: Jagwah.Template.copy = {
 			$selector: template.$selector,
