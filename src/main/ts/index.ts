@@ -18,7 +18,11 @@ export class Jagwah {
 	private providers: Jagwah.Provider.set = {};
 	private templates: Jagwah.Template.set = {};
 
+	private documentTitle: string;
+
 	constructor(options: Jagwah.options = {}) {
+		this.documentTitle = options.title || "";
+		this.title();
 		/** register constants */
 		this.constants = options.constants;
 
@@ -67,6 +71,10 @@ export class Jagwah {
 		}));
 	}
 
+	public title(value?: string, replace: boolean = false) {
+		document.title = replace && this.documentTitle ? value : value ? `${this.documentTitle} - ${value}` : this.documentTitle;
+	}
+
 	/**
 	 * Initialize a Template for rendering.
 	 */
@@ -101,6 +109,8 @@ export class Jagwah {
 		const dependencies = this.Dependencies(route.$inject);
 		const routeInstance = new route(...dependencies);
 		this.router.register(route.$route, async (context: Router.Context) => {
+			this.title();
+
 			context.params = {
 				...context.params,
 				...route.$context,
@@ -201,6 +211,7 @@ export namespace Jagwah {
 	export const define = hyperhtml.define;
 
 	export interface options {
+		title?: string;
 		constants?: { [key: string]: any };
 		providers?: Jagwah.Provider[];
 		routes?: Jagwah.Route[];
