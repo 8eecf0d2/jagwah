@@ -24,7 +24,6 @@ export class Jagwah {
 
 		/** register "this" as provider $jagwah */
 		this.providers['$jagwah'] = this;
-		this.providers['$router'] = this.router;
 		this.providers['$radio'] = this.radio;
 
 		/** register providers */
