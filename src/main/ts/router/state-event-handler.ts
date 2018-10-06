@@ -25,6 +25,7 @@ export function handleStateEvent(e: any) {
 		while (target && target.nodeName !== A) target = target.parentNode;
 		return target;
 	}).call(target, 'A');
+
 	if (
 		// it was found
 		anchor &&
