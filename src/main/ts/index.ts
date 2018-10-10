@@ -2,15 +2,16 @@
  * jagwah - https://github.com/8eecf0d2/jagwah
  */
 
-import * as hyperhtml from 'hyperhtml/cjs';
+import * as hyperhtml from "hyperhtml/cjs";
 
-import { Router } from './router';
-import { Providers } from './providers';
+import { Router } from "./router";
+import { Providers } from "./providers";
 
-export * from './helpers';
-export * from './decorators';
+export * from "./helpers";
+export * from "./decorators";
 
 export class Jagwah {
+	public ready: boolean = false;
 	public router: Router = new Router();
 
 	public constants: { [key: string]: any };
@@ -20,14 +21,23 @@ export class Jagwah {
 
 	private documentTitle: string;
 
+	private animates: HTMLElement[];
+
 	constructor(options: Jagwah.options = {}) {
+		//@ts-ignore
+		window.jagwah = this;
+
 		this.documentTitle = options.title || "";
 		this.title();
+
 		/** register constants */
 		this.constants = options.constants;
 
+		/** register animate elements */
+		this.animates = options.animate ? options.animate.map(id => document.getElementById(id)) : [];
+
 		/** register "this" as provider $jagwah */
-		this.providers['$jagwah'] = this;
+		this.providers["$jagwah"] = this;
 
 		/** register providers */
 		const providers = [ Providers.SyncProvider, ...(options.providers || []) ]
@@ -56,12 +66,12 @@ export class Jagwah {
 			await this.processStartHandler(options.before);
 		}
 
+		this.ready = true;
 		this.router.start();
 
 		if(options.after) {
 			await this.processStartHandler(options.after);
 		}
-
 	}
 
 	private async processStartHandler(handlers: any[]) {
@@ -85,13 +95,20 @@ export class Jagwah {
 		const dependencies = this.Dependencies(template.$inject);
 		const _template: Jagwah.Template.copy = {
 			$selector: template.$selector,
-			$template: template.$template || 'anonymous',
+			$template: template.$template || "anonymous",
 			$element: hyperhtml.bind(document.querySelectorAll(template.$selector)[0]),
 			instance: new template(...dependencies),
 		}
 
 		/** add / replace template in active templates (based on selector) */
 		this.templates[_template.$selector] = _template;
+	}
+
+	private animateClasses (state: string) {
+		for(const element of this.animates) {
+			element.className = "";
+			element.classList.add(`jagwah-${state}`);
+		}
 	}
 
 	/**
@@ -115,6 +132,8 @@ export class Jagwah {
 				...context.params,
 				...route.$context,
 			}
+
+			this.animateClasses("loading");
 
 			/** set route "before" templates */
 			if(route.$beforetemplates && context.path === this.router.context.path) {
@@ -166,6 +185,7 @@ export class Jagwah {
 				}
 			}
 
+			this.animateClasses("ready");
 		});
 	}
 
@@ -198,6 +218,9 @@ export class Jagwah {
 	 * Update DOM
 	 */
 	public update() {
+		if(this.ready === false) {
+			return
+		}
 		for(const template in this.templates) {
 			this.templates[template].instance.render(this.templates[template].$element);
 		}
@@ -216,6 +239,15 @@ export namespace Jagwah {
 		providers?: Jagwah.Provider[];
 		routes?: Jagwah.Route[];
 		templates?: Jagwah.Template[];
+		animate?: string[];
+		resources?: Jagwah.Resource.Template[];
+	}
+
+	export namespace Resource {
+		export interface Template {
+			template: string;
+			url: string;
+		}
 	}
 
 	export namespace start {
